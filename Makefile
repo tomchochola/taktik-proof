@@ -40,7 +40,7 @@ fix: ./node_modules/.bin/prettier ./vendor/bin/php-cs-fixer ./node_modules/.bin/
 	./node_modules/.bin/eslint --fix .
 
 .PHONY: test
-test: ./vendor/bin/phpunit ./artisan ./bootstrap/cache/services.php ./bootstrap/cache/packages.php
+test: .env.testing ./vendor/bin/phpunit ./artisan ./bootstrap/cache/services.php ./bootstrap/cache/packages.php
 	${MAKE_ARTISAN} optimize:clear --env=testing
 	${MAKE_ARTISAN} test --env=testing
 
@@ -73,7 +73,7 @@ serve: ./vendor/autoload.php ./artisan ./bootstrap/cache/services.php ./bootstra
 
 # Deploy / Release
 .PHONY: local
-local:
+local: .env.local
 	${MAKE_COMPOSER} install
 	npm install --install-links --include prod --include dev --include peer --include optional
 	rm -rf ./bootstrap/cache/packages.php
@@ -87,13 +87,13 @@ local:
 	${MAKE_ARTISAN} queue:restart
 
 .PHONY: testing
-testing: local
+testing: .env.testing local
 
 .PHONY: development
-development: testing
+development: .env.development testing
 
 .PHONY: staging
-staging:
+staging: .env.staging
 	${MAKE_COMPOSER} install
 	npm install --install-links --include prod --include dev --include peer --include optional
 	rm -rf ./bootstrap/cache/packages.php
@@ -109,7 +109,7 @@ staging:
 	${MAKE_ARTISAN} queue:restart
 
 .PHONY: production
-production: staging
+production: .env.production staging
 
 # Dependencies
 ./vendor ./composer.lock ./vendor/bin/phpstan ./vendor/bin/php-cs-fixer ./vendor/bin/phpunit ./vendor/autoload.php:
