@@ -1,0 +1,1494 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Laravel Template",
+    "description": "### 📘 API Documentation\n\nWelcome to the API documentation. This API provides a range of endpoints for various operations, including user authentication, verifications, session management, and more. It is designed to be flexible and scalable, allowing for future expansion and new endpoints.\n\n### 🌐 HTTP Client Options\n\nTo interact with this API, ensure your HTTP client meets the following requirements:\n\n- **CORS**: All requests must be made using Cross-Origin Resource Sharing (CORS) with credentials enabled.\n- **Cookies**: The API uses cookies for session management. Ensure cookies are enabled in your client, whether it's a browser or another type of HTTP client.\n\n### 📝 Input Formats\n\nFor modifying operations (POST, PUT, PATCH, DELETE), the API accepts input in the following formats:\n\n- `multipart/form-data`\n- `application/x-www-form-urlencoded`\n\n### 📦 Output Formats\n\nAll responses from the API adhere to the `application/vnd.api+json` format, following the [JSON:API](https://jsonapi.org) specification. This ensures consistent and structured responses, including:\n\n- **Data**: Standardized response structures for single resources and collections.\n- **Relationships**: Efficient management of related resources using 'included' relationships.\n- **Errors**: Clear and consistent error messages and status codes.\n\n### 🔧 JSON:API Compliance\n\nThis API fully complies with the JSON:API specification for all responses. The use of `application/vnd.api+json` ensures:\n\n- **Consistency**: Uniform response formats across all endpoints.\n- **Scalability**: Easy integration and expansion with new endpoints and resource types.\n- **Interoperability**: Smooth interaction with clients and tools that support JSON:API.\n\n### 🔍 Summary\n\nThis API is designed to be flexible, secure, and easy to use, with a focus on providing consistent and structured data through the JSON:API specification for all responses. Whether you're handling user authentication, managing sessions, or performing verifications, this API ensures a standardized approach to all operations.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Tomáš Chochola",
+      "url": "https://github.com/tomchochola",
+      "email": "chocholatom1997@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "security": [
+    {},
+    {
+      "bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "authenticatable",
+      "description": "Authenticatable endpoints"
+    },
+    {
+      "name": "sessions",
+      "description": "Session endpoints"
+    },
+    {
+      "name": "verifications",
+      "description": "Verifications endpoints"
+    }
+  ],
+  "paths": {
+    "/api/authenticatable/retrieve": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Retrieve authenticatable details",
+        "description": "Retrieve the details of an authenticatable user using their credentials.",
+        "operationId": "post_api_authenticatable_retrieve",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": {
+                    "$ref": "#/components/schemas/email"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/NullableAuthenticatableResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/email_verification": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Send email verification",
+        "description": "Send an email to verify the authenticatable user's email address.",
+        "operationId": "post_api_authenticatable_email_verification",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["email", "url", "locale"],
+                "properties": {
+                  "email": {
+                    "$ref": "#/components/schemas/email"
+                  },
+                  "url": {
+                    "$ref": "#/components/schemas/url"
+                  },
+                  "locale": {
+                    "$ref": "#/components/schemas/locale"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/VerificationResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/register": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Register a new account",
+        "description": "Create a new account with a credentials, password, and locale.",
+        "operationId": "post_api_authenticatable_register",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["email", "password", "locale"],
+                "properties": {
+                  "email": {
+                    "$ref": "#/components/schemas/email"
+                  },
+                  "password": {
+                    "$ref": "#/components/schemas/password"
+                  },
+                  "locale": {
+                    "$ref": "#/components/schemas/locale"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AuthResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/login_verification": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Send login verification",
+        "description": "Send an email to authorize a login attempt.",
+        "operationId": "post_api_authenticatable_login_verification",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["email", "url", "locale", "password"],
+                "properties": {
+                  "email": {
+                    "$ref": "#/components/schemas/email"
+                  },
+                  "url": {
+                    "$ref": "#/components/schemas/url"
+                  },
+                  "locale": {
+                    "$ref": "#/components/schemas/locale"
+                  },
+                  "password": {
+                    "$ref": "#/components/schemas/password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/VerificationResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/login": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "User login",
+        "description": "Authenticate a user using credentials and password.",
+        "operationId": "post_api_authenticatable_login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": {
+                    "$ref": "#/components/schemas/email"
+                  },
+                  "password": {
+                    "$ref": "#/components/schemas/password"
+                  },
+                  "remember": {
+                    "$ref": "#/components/schemas/boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AuthResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/current": {
+      "get": {
+        "tags": ["authenticatable"],
+        "summary": "Get current authenticatable details",
+        "description": "Retrieve details of the currently authenticated user.",
+        "operationId": "get_api_authenticatable_current",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/NullableAuthResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/logout_current_device": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Logout from current device",
+        "description": "Logout the user from the current device.",
+        "operationId": "post_api_authenticatable_logout_current_device",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/NullResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/logout_other_devices": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Logout from other devices",
+        "description": "Logout the user from all devices except the current one.",
+        "operationId": "post_api_authenticatable_logout_other_devices",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["password"],
+                "properties": {
+                  "password": {
+                    "$ref": "#/components/schemas/password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AuthResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/logout_all_devices": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Logout from all devices",
+        "description": "Logout the user from all devices.",
+        "operationId": "post_api_authenticatable_logout_all_devices",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["password"],
+                "properties": {
+                  "password": {
+                    "$ref": "#/components/schemas/password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/NullResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/delete_verification": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Send account deletion verification",
+        "description": "SSend an email to authorize the deletion of the user account.",
+        "operationId": "post_api_authenticatable_delete_verification",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["url", "locale"],
+                "properties": {
+                  "url": {
+                    "$ref": "#/components/schemas/url"
+                  },
+                  "locale": {
+                    "$ref": "#/components/schemas/locale"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/VerificationResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/delete": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Delete user account",
+        "description": "Permanently delete the user account.",
+        "operationId": "post_api_authenticatable_delete",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["password"],
+                "properties": {
+                  "password": {
+                    "$ref": "#/components/schemas/password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/NullResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/update": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Update account details",
+        "description": "Update the details of an authenticated user account.",
+        "operationId": "post_api_authenticatable_update",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["locale"],
+                "properties": {
+                  "locale": {
+                    "$ref": "#/components/schemas/locale"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AuthResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/credentials_update_verification": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Send credentials update verification",
+        "description": " Send an email to authorize the update of account credentials.",
+        "operationId": "post_api_authenticatable_credentials_update_verification",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["url", "locale"],
+                "properties": {
+                  "url": {
+                    "$ref": "#/components/schemas/url"
+                  },
+                  "locale": {
+                    "$ref": "#/components/schemas/locale"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/VerificationResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/credentials_update": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Update account credentials",
+        "description": "Update the email or other credentials of an authenticated user account.",
+        "operationId": "post_api_authenticatable_credentials_update",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": {
+                    "$ref": "#/components/schemas/email"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AuthResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/password_update_verification": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Send password update verification",
+        "description": "Send an email to authorize the update of the account password.",
+        "operationId": "post_api_authenticatable_password_update_verification",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["url", "locale"],
+                "properties": {
+                  "url": {
+                    "$ref": "#/components/schemas/url"
+                  },
+                  "locale": {
+                    "$ref": "#/components/schemas/locale"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/VerificationResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/password_update": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Update account password",
+        "description": "Update the password of an authenticated user account.",
+        "operationId": "post_api_authenticatable_password_update",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["password", "new_password"],
+                "properties": {
+                  "password": {
+                    "$ref": "#/components/schemas/password"
+                  },
+                  "new_password": {
+                    "$ref": "#/components/schemas/password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AuthResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/password_reset_verification": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Send password reset verification",
+        "description": "Send a verification message to authorize the reset of the account password.",
+        "operationId": "post_api_authenticatable_password_reset_verification",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["email", "url", "locale"],
+                "properties": {
+                  "email": {
+                    "$ref": "#/components/schemas/email"
+                  },
+                  "url": {
+                    "$ref": "#/components/schemas/url"
+                  },
+                  "locale": {
+                    "$ref": "#/components/schemas/locale"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/VerificationResponse"
+          }
+        }
+      }
+    },
+    "/api/authenticatable/password_reset": {
+      "post": {
+        "tags": ["authenticatable"],
+        "summary": "Reset account password",
+        "description": "Reset the password of an authenticated user account.",
+        "operationId": "post_api_authenticatable_password_reset",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["password"],
+                "properties": {
+                  "password": {
+                    "$ref": "#/components/schemas/password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/AuthResponse"
+          }
+        }
+      }
+    },
+    "/api/verifications/show": {
+      "get": {
+        "tags": ["verifications"],
+        "summary": "Retrieve verification details",
+        "description": "Retrieve details of a specific verification using its ID.",
+        "operationId": "get_api_verifications_show",
+        "parameters": [
+          {
+            "name": "verification_id",
+            "in": "query",
+            "description": "verification id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/identifier"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/VerificationResponse"
+          }
+        }
+      }
+    },
+    "/api/verifications/complete": {
+      "post": {
+        "tags": ["verifications"],
+        "summary": "Complete verification process",
+        "description": "Complete the verification process using the verification ID and token.",
+        "operationId": "post_api_verifications_complete",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["verification_id", "token"],
+                "properties": {
+                  "verification_id": {
+                    "$ref": "#/components/schemas/identifier"
+                  },
+                  "token": {
+                    "$ref": "#/components/schemas/token"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/VerificationResponse"
+          }
+        }
+      }
+    },
+    "/api/sessions/invalidate": {
+      "post": {
+        "tags": ["sessions"],
+        "summary": "Invalidate current session",
+        "description": "Invalidate the current session, which also regenerates a new session ID.",
+        "operationId": "post_api_sessions_invalidate",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SessionResponse"
+          }
+        }
+      }
+    },
+    "/api/sessions/regenerate": {
+      "post": {
+        "tags": ["sessions"],
+        "summary": "Regenerate session ID",
+        "description": "Regenerate the current session ID.",
+        "operationId": "post_api_sessions_regenerate",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SessionResponse"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "id": {
+        "description": "id",
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9223372036854775807
+      },
+      "nullableId": {
+        "description": "id or null",
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9223372036854775807,
+        "nullable": true
+      },
+      "identifier": {
+        "description": "identifier",
+        "type": "string",
+        "format": "identifier",
+        "minLength": 1,
+        "maxLength": 255,
+        "example": "9223372036854775807"
+      },
+      "nullableIdentifier": {
+        "description": "identifier or null",
+        "type": "string",
+        "format": "identifier",
+        "minLength": 1,
+        "maxLength": 255,
+        "nullable": true,
+        "example": "9223372036854775807"
+      },
+      "password": {
+        "description": "password",
+        "type": "string",
+        "format": "password",
+        "pattern": ".+",
+        "minLength": 8,
+        "maxLength": 1024
+      },
+      "nullablePassword": {
+        "description": "password or null",
+        "type": "string",
+        "format": "password",
+        "pattern": ".+",
+        "minLength": 8,
+        "maxLength": 1024,
+        "nullable": true
+      },
+      "locale": {
+        "description": "locale",
+        "type": "string",
+        "enum": ["en", "cs", "sk"]
+      },
+      "nullableLocale": {
+        "description": "locale or null",
+        "type": "string",
+        "enum": ["en", "cs", "sk"],
+        "nullable": true
+      },
+      "email": {
+        "description": "e-mail",
+        "type": "string",
+        "format": "email",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 255,
+        "example": "email@email.com"
+      },
+      "nullableEmail": {
+        "description": "e-mail or null",
+        "type": "string",
+        "format": "email",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 255,
+        "nullable": true,
+        "example": "email@email.com"
+      },
+      "url": {
+        "description": "url",
+        "type": "string",
+        "format": "uri",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 1024,
+        "example": "http://localhost:8000"
+      },
+      "session_id": {
+        "description": "session id",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 40,
+        "maxLength": 255
+      },
+      "token": {
+        "description": "token",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 40,
+        "maxLength": 255
+      },
+      "nullableToken": {
+        "description": "token or null",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 40,
+        "maxLength": 255,
+        "nullable": true
+      },
+      "varchar": {
+        "description": "varchar",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 255
+      },
+      "nullableVarchar": {
+        "description": "varchar or null",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 255,
+        "nullable": true
+      },
+      "tinyText": {
+        "description": "tiny text",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 256
+      },
+      "nullableTinyText": {
+        "description": "tiny text or null",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 256,
+        "nullable": true
+      },
+      "text": {
+        "description": "text",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 65535
+      },
+      "nullableText": {
+        "description": "text or null",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 65535,
+        "nullable": true
+      },
+      "mediumText": {
+        "description": "medium text",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 16777215
+      },
+      "nullableMediumText": {
+        "description": "medium text or null",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 16777215,
+        "nullable": true
+      },
+      "longText": {
+        "description": "long text",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 4294967295
+      },
+      "nullableLongText": {
+        "description": "long text or null",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 4294967295,
+        "nullable": true
+      },
+      "tinyInt": {
+        "description": "tiny int",
+        "type": "integer",
+        "minimum": -128,
+        "maximum": 127
+      },
+      "nullableTinyInt": {
+        "description": "tiny int or null",
+        "type": "integer",
+        "minimum": -128,
+        "maximum": 127,
+        "nullable": true
+      },
+      "unsignedTinyInt": {
+        "description": "unsigned tiny int",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 255
+      },
+      "nullableUnsignedTinyInt": {
+        "description": "unsigned tiny int or null",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 255,
+        "nullable": true
+      },
+      "smallInt": {
+        "description": "small int",
+        "type": "integer",
+        "minimum": -32768,
+        "maximum": 32767
+      },
+      "nullableSmallInt": {
+        "description": "small int or null",
+        "type": "integer",
+        "minimum": -32768,
+        "maximum": 32767,
+        "nullable": true
+      },
+      "unsignedSmallInt": {
+        "description": "unsigned small int",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 65535
+      },
+      "nullableUnsignedSmallInt": {
+        "description": "unsigned small int or null",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 65535,
+        "nullable": true
+      },
+      "mediumInt": {
+        "description": "medium int",
+        "type": "integer",
+        "minimum": -8388608,
+        "maximum": 8388607
+      },
+      "nullableMediumInt": {
+        "description": "medium int or null",
+        "type": "integer",
+        "minimum": -8388608,
+        "maximum": 8388607,
+        "nullable": true
+      },
+      "unsignedMediumInt": {
+        "description": "unsigned medium int",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 16777215
+      },
+      "nullableUnsignedMediumInt": {
+        "description": "unsigned medium int or null",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 16777215,
+        "nullable": true
+      },
+      "int": {
+        "description": "int",
+        "type": "integer",
+        "minimum": -2147483648,
+        "maximum": 2147483647
+      },
+      "nullableInt": {
+        "description": "int or null",
+        "type": "integer",
+        "minimum": -2147483648,
+        "maximum": 2147483647,
+        "nullable": true
+      },
+      "unsignedInt": {
+        "description": "unsigned int",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 4294967295
+      },
+      "nullableUnsignedInt": {
+        "description": "unsigned int or null",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 4294967295,
+        "nullable": true
+      },
+      "bigInt": {
+        "description": "big int",
+        "type": "integer",
+        "minimum": -9223372036854775808,
+        "maximum": 9223372036854775807
+      },
+      "nullableBigInt": {
+        "description": "big int or null",
+        "type": "integer",
+        "minimum": -9223372036854775808,
+        "maximum": 9223372036854775807,
+        "nullable": true
+      },
+      "unsignedBigInt": {
+        "description": "unsigned big int",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9223372036854775807
+      },
+      "nullableUnsignedBigInt": {
+        "description": "unsigned big int or null",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9223372036854775807,
+        "nullable": true
+      },
+      "string": {
+        "description": "string",
+        "type": "string"
+      },
+      "nullableString": {
+        "description": "string or null",
+        "type": "string",
+        "nullable": true
+      },
+      "integer": {
+        "description": "integer",
+        "type": "integer"
+      },
+      "nullableInteger": {
+        "description": "integer or null",
+        "type": "integer",
+        "nullable": true
+      },
+      "number": {
+        "description": "number",
+        "type": "number"
+      },
+      "nullableNumber": {
+        "description": "number or null",
+        "type": "number",
+        "nullable": true
+      },
+      "double": {
+        "description": "double",
+        "type": "number",
+        "format": "double"
+      },
+      "nullableDouble": {
+        "description": "double or null",
+        "type": "number",
+        "format": "double",
+        "nullable": true
+      },
+      "datetime": {
+        "description": "datetime",
+        "type": "string",
+        "format": "date-time"
+      },
+      "nullableDatetime": {
+        "description": "datetime or null",
+        "type": "string",
+        "format": "date-time",
+        "nullable": true
+      },
+      "date": {
+        "description": "date",
+        "type": "string",
+        "format": "date"
+      },
+      "nullableDate": {
+        "description": "date or null",
+        "type": "string",
+        "format": "date",
+        "nullable": true
+      },
+      "boolean": {
+        "description": "boolean",
+        "type": "boolean"
+      },
+      "nullableBoolean": {
+        "description": "boolean",
+        "type": "boolean",
+        "nullable": true
+      },
+      "Resource": {
+        "description": "json:api resource",
+        "type": "object",
+        "required": ["id", "slug", "type"],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/identifier"
+          },
+          "slug": {
+            "$ref": "#/components/schemas/identifier"
+          },
+          "type": {
+            "$ref": "#/components/schemas/string"
+          }
+        }
+      },
+      "NullableResource": {
+        "description": "json:api nullable resource",
+        "type": "object",
+        "required": ["id", "slug", "type"],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/identifier"
+          },
+          "slug": {
+            "$ref": "#/components/schemas/identifier"
+          },
+          "type": {
+            "$ref": "#/components/schemas/string"
+          }
+        },
+        "nullable": true
+      },
+      "NullableRelationship": {
+        "description": "json:api nullable relationship",
+        "type": "object",
+        "required": ["data"],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/NullableResource"
+          }
+        }
+      },
+      "RelationshipCollection": {
+        "description": "json:api relationship collection",
+        "type": "object",
+        "required": ["data"],
+        "properties": {
+          "data": {
+            "description": "collection of resources",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Resource"
+            }
+          }
+        }
+      },
+      "AuthResource": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Resource"
+          },
+          {
+            "description": "auth json:api resource",
+            "type": "object",
+            "required": ["attributes", "meta"],
+            "properties": {
+              "attributes": {
+                "description": "attributes",
+                "type": "object",
+                "required": ["auth_identifier", "preferred_locale"],
+                "properties": {
+                  "auth_identifier": {
+                    "$ref": "#/components/schemas/identifier"
+                  },
+                  "preferred_locale": {
+                    "$ref": "#/components/schemas/nullableLocale"
+                  },
+                  "email_for_password_reset": {
+                    "$ref": "#/components/schemas/nullableEmail"
+                  },
+                  "email_for_verification": {
+                    "$ref": "#/components/schemas/nullableEmail"
+                  }
+                }
+              },
+              "meta": {
+                "description": "meta",
+                "type": "object",
+                "required": ["login_password_authorization", "login_multifactor_authorization"],
+                "properties": {
+                  "login_password_authorization": {
+                    "$ref": "#/components/schemas/boolean"
+                  },
+                  "login_multifactor_authorization": {
+                    "$ref": "#/components/schemas/boolean"
+                  }
+                }
+              },
+              "relationships": {
+                "description": "relationships",
+                "type": "object",
+                "properties": {
+                  "unlimited_token": {
+                    "$ref": "#/components/schemas/NullableRelationship"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "NullableAuthResource": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AuthResource"
+          },
+          {
+            "nullable": true
+          }
+        ]
+      },
+      "AuthenticatableResource": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Resource"
+          },
+          {
+            "description": "authenticatable json:api resource",
+            "type": "object",
+            "required": ["attributes", "meta"],
+            "properties": {
+              "attributes": {
+                "description": "attributes",
+                "type": "object",
+                "required": ["auth_identifier", "preferred_locale"],
+                "properties": {
+                  "auth_identifier": {
+                    "$ref": "#/components/schemas/identifier"
+                  },
+                  "preferred_locale": {
+                    "$ref": "#/components/schemas/nullableLocale"
+                  }
+                }
+              },
+              "meta": {
+                "description": "meta",
+                "type": "object",
+                "required": ["login_password_authorization", "login_multifactor_authorization"],
+                "properties": {
+                  "login_password_authorization": {
+                    "$ref": "#/components/schemas/boolean"
+                  },
+                  "login_multifactor_authorization": {
+                    "$ref": "#/components/schemas/boolean"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "NullableAuthenticatableResource": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AuthenticatableResource"
+          },
+          {
+            "nullable": true
+          }
+        ]
+      },
+      "VerificationResource": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Resource"
+          },
+          {
+            "description": "verification json:api resource",
+            "type": "object",
+            "required": ["attributes"],
+            "properties": {
+              "attributes": {
+                "description": "attributes",
+                "type": "object",
+                "required": ["action", "action_trans", "duration", "expires_at", "uses", "verification_id", "verified_at", "is_active", "is_ready", "is_completed", "pair"],
+                "properties": {
+                  "action": {
+                    "$ref": "#/components/schemas/string"
+                  },
+                  "action_trans": {
+                    "$ref": "#/components/schemas/nullableString"
+                  },
+                  "duration": {
+                    "$ref": "#/components/schemas/integer"
+                  },
+                  "expires_at": {
+                    "$ref": "#/components/schemas/datetime"
+                  },
+                  "uses": {
+                    "$ref": "#/components/schemas/integer"
+                  },
+                  "verification_id": {
+                    "$ref": "#/components/schemas/identifier"
+                  },
+                  "verified_at": {
+                    "$ref": "#/components/schemas/nullableDatetime"
+                  },
+                  "is_active": {
+                    "$ref": "#/components/schemas/boolean"
+                  },
+                  "is_ready": {
+                    "$ref": "#/components/schemas/boolean"
+                  },
+                  "is_completed": {
+                    "$ref": "#/components/schemas/boolean"
+                  },
+                  "pair": {
+                    "$ref": "#/components/schemas/string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "SessionResource": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Resource"
+          }
+        ]
+      },
+      "UnlimitedTokenResource": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Resource"
+          },
+          {
+            "description": "unlimited token json:api resource",
+            "type": "object",
+            "required": ["attributes"],
+            "properties": {
+              "attributes": {
+                "description": "attributes",
+                "type": "object",
+                "required": ["bearer_token", "authenticatable_id", "guard_name", "user_provider_name", "ip", "user_agent", "origin", "revoked_at"],
+                "properties": {
+                  "bearer_token": {
+                    "$ref": "#/components/schemas/nullableToken"
+                  },
+                  "authenticatable_id": {
+                    "$ref": "#/components/schemas/identifier"
+                  },
+                  "guard_name": {
+                    "$ref": "#/components/schemas/string"
+                  },
+                  "user_provider_name": {
+                    "$ref": "#/components/schemas/string"
+                  },
+                  "ip": {
+                    "$ref": "#/components/schemas/nullableString"
+                  },
+                  "user_agent": {
+                    "$ref": "#/components/schemas/nullableString"
+                  },
+                  "origin": {
+                    "$ref": "#/components/schemas/nullableString"
+                  },
+                  "revoked_at": {
+                    "$ref": "#/components/schemas/nullableDatetime"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Successful operation"
+      },
+      "4xx": {
+        "description": "Client error"
+      },
+      "NullResponse": {
+        "description": "Successful operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "json:api document",
+              "type": "object",
+              "required": ["data"],
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "nullable": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "VerificationResponse": {
+        "description": "Successful operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "json:api document",
+              "type": "object",
+              "required": ["data"],
+              "properties": {
+                "data": {
+                  "$ref": "#/components/schemas/VerificationResource"
+                }
+              }
+            }
+          }
+        }
+      },
+      "AuthResponse": {
+        "description": "Successful operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "json:api document",
+              "type": "object",
+              "required": ["data"],
+              "properties": {
+                "data": {
+                  "$ref": "#/components/schemas/AuthResource"
+                },
+                "included": {
+                  "description": "json:api included",
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/UnlimitedTokenResource"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "NullableAuthResponse": {
+        "description": "Successful operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "json:api document",
+              "type": "object",
+              "required": ["data"],
+              "properties": {
+                "data": {
+                  "$ref": "#/components/schemas/NullableAuthResource"
+                },
+                "included": {
+                  "description": "json:api included",
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/UnlimitedTokenResource"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "AuthenticatableResponse": {
+        "description": "Successful operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "json:api document",
+              "type": "object",
+              "required": ["data"],
+              "properties": {
+                "data": {
+                  "$ref": "#/components/schemas/AuthenticatableResource"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NullableAuthenticatableResponse": {
+        "description": "Successful operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "json:api document",
+              "type": "object",
+              "required": ["data"],
+              "properties": {
+                "data": {
+                  "$ref": "#/components/schemas/NullableAuthenticatableResource"
+                }
+              }
+            }
+          }
+        }
+      },
+      "SessionResponse": {
+        "description": "Successful operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "json:api document",
+              "type": "object",
+              "required": ["data"],
+              "properties": {
+                "data": {
+                  "$ref": "#/components/schemas/SessionResource"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

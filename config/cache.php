@@ -1,9 +1,33 @@
 <?php
 
+/**
+ * Copyright © 2024+ Tomáš Chochola <chocholatom1997@gmail.com> - All Rights Reserved
+ *
+ * This software is the exclusive property of Tomáš Chochola, protected by copyright laws.
+ * Although the source code may be accessible, it is not free for use without a valid license.
+ * A valid license, obtainable through proper channels, is required for any software use.
+ * For licensing or inquiries, please contact Tomáš Chochola or refer to the GitHub Sponsors page.
+ *
+ * The full license terms are detailed in the LICENSE.md file within the source code repository.
+ * The terms are subject to changes. Users are encouraged to review them periodically.
+ *
+ * 🤵 The Proprietor: Tomáš Chochola
+ * - Role: The Creator, Proprietor & Project Visionary
+ * - Email: chocholatom1997@gmail.com
+ * - GitHub: https://github.com/tomchochola
+ * - Sponsor & License: https://github.com/sponsors/tomchochola
+ * - Web: https://premierstacks.com
+ */
+
+declare(strict_types=1);
+
 use Illuminate\Support\Str;
+use Premierstacks\LaravelStack\Config\Env;
+use Premierstacks\PhpStack\Mixed\Filter;
+
+$env = Env::inject();
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Cache Store
@@ -15,7 +39,7 @@ return [
     |
     */
 
-    'default' => env('CACHE_STORE', 'database'),
+    'default' => Filter::string($env->get('CACHE_STORE', 'redis')),
 
     /*
     |--------------------------------------------------------------------------
@@ -32,7 +56,6 @@ return [
     */
 
     'stores' => [
-
         'array' => [
             'driver' => 'array',
             'serialize' => false,
@@ -40,31 +63,31 @@ return [
 
         'database' => [
             'driver' => 'database',
-            'table' => env('DB_CACHE_TABLE', 'cache'),
-            'connection' => env('DB_CACHE_CONNECTION'),
-            'lock_connection' => env('DB_CACHE_LOCK_CONNECTION'),
+            'table' => Filter::string($env->get('DB_CACHE_TABLE', 'cache')),
+            'connection' => Filter::nullableString($env->get('DB_CACHE_CONNECTION', null)),
+            'lock_connection' => Filter::nullableString($env->get('DB_CACHE_LOCK_CONNECTION', null)),
         ],
 
         'file' => [
             'driver' => 'file',
-            'path' => storage_path('framework/cache/data'),
-            'lock_path' => storage_path('framework/cache/data'),
+            'path' => \storage_path('framework/cache/data'),
+            'lock_path' => \storage_path('framework/cache/data'),
         ],
 
         'memcached' => [
             'driver' => 'memcached',
-            'persistent_id' => env('MEMCACHED_PERSISTENT_ID'),
+            'persistent_id' => Filter::nullableString($env->get('MEMCACHED_PERSISTENT_ID', null)),
             'sasl' => [
-                env('MEMCACHED_USERNAME'),
-                env('MEMCACHED_PASSWORD'),
+                Filter::nullableString($env->get('MEMCACHED_USERNAME', null)),
+                Filter::nullableString($env->get('MEMCACHED_PASSWORD', null)),
             ],
             'options' => [
                 // Memcached::OPT_CONNECT_TIMEOUT => 2000,
             ],
             'servers' => [
                 [
-                    'host' => env('MEMCACHED_HOST', '127.0.0.1'),
-                    'port' => env('MEMCACHED_PORT', 11211),
+                    'host' => Filter::string($env->get('MEMCACHED_HOST', '127.0.0.1')),
+                    'port' => Filter::int($env->get('MEMCACHED_PORT', 11_211)),
                     'weight' => 100,
                 ],
             ],
@@ -72,23 +95,30 @@ return [
 
         'redis' => [
             'driver' => 'redis',
-            'connection' => env('REDIS_CACHE_CONNECTION', 'cache'),
-            'lock_connection' => env('REDIS_CACHE_LOCK_CONNECTION', 'default'),
+            'connection' => Filter::string($env->get('REDIS_CACHE_CONNECTION', 'cache')),
+            'lock_connection' => Filter::string($env->get('REDIS_CACHE_LOCK_CONNECTION', 'default')),
         ],
 
         'dynamodb' => [
             'driver' => 'dynamodb',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
-            'table' => env('DYNAMODB_CACHE_TABLE', 'cache'),
-            'endpoint' => env('DYNAMODB_ENDPOINT'),
+            'key' => Filter::nullableString($env->get('AWS_ACCESS_KEY_ID', null)),
+            'secret' => Filter::nullableString($env->get('AWS_SECRET_ACCESS_KEY', null)),
+            'region' => Filter::string($env->get('AWS_DEFAULT_REGION', 'us-east-1')),
+            'table' => Filter::string($env->get('DYNAMODB_CACHE_TABLE', 'cache')),
+            'endpoint' => Filter::nullableString($env->get('DYNAMODB_ENDPOINT', null)),
         ],
 
         'octane' => [
             'driver' => 'octane',
         ],
 
+        'null' => [
+            'driver' => 'null',
+        ],
+
+        'off' => [
+            'driver' => 'null',
+        ],
     ],
 
     /*
@@ -102,6 +132,5 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache_'),
-
+    'prefix' => Filter::string($env->get('CACHE_PREFIX', '{' . Str::slug(Filter::string($env->get('APP_NAME', 'Laravel')) . '_' . Filter::string($env->get('APP_ENV', 'production')) . '_cache', language: null) . '}')),
 ];

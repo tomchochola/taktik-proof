@@ -1,9 +1,37 @@
 <?php
 
+/**
+ * Copyright © 2024+ Tomáš Chochola <chocholatom1997@gmail.com> - All Rights Reserved
+ *
+ * This software is the exclusive property of Tomáš Chochola, protected by copyright laws.
+ * Although the source code may be accessible, it is not free for use without a valid license.
+ * A valid license, obtainable through proper channels, is required for any software use.
+ * For licensing or inquiries, please contact Tomáš Chochola or refer to the GitHub Sponsors page.
+ *
+ * The full license terms are detailed in the LICENSE.md file within the source code repository.
+ * The terms are subject to changes. Users are encouraged to review them periodically.
+ *
+ * 🤵 The Proprietor: Tomáš Chochola
+ * - Role: The Creator, Proprietor & Project Visionary
+ * - Email: chocholatom1997@gmail.com
+ * - GitHub: https://github.com/tomchochola
+ * - Sponsor & License: https://github.com/sponsors/tomchochola
+ * - Web: https://premierstacks.com
+ */
+
+declare(strict_types=1);
+
 use Illuminate\Support\Str;
+use Premierstacks\LaravelStack\Config\Env;
+use Premierstacks\PhpStack\Mixed\Filter;
+
+$env = Env::inject();
+
+$path = Filter::string($env->get('SESSION_PATH', '/'));
+$secure = Filter::bool($env->get('SESSION_SECURE', true));
+$domain = Filter::nullableString($env->get('SESSION_DOMAIN', null));
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Session Driver
@@ -18,7 +46,7 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'database'),
+    'driver' => Filter::string($env->get('SESSION_DRIVER', 'redis')),
 
     /*
     |--------------------------------------------------------------------------
@@ -32,9 +60,9 @@ return [
     |
     */
 
-    'lifetime' => env('SESSION_LIFETIME', 120),
+    'lifetime' => Filter::int($env->get('SESSION_LIFETIME', 120)),
 
-    'expire_on_close' => env('SESSION_EXPIRE_ON_CLOSE', false),
+    'expire_on_close' => Filter::bool($env->get('SESSION_EXPIRE_ON_CLOSE', false)),
 
     /*
     |--------------------------------------------------------------------------
@@ -47,7 +75,7 @@ return [
     |
     */
 
-    'encrypt' => env('SESSION_ENCRYPT', false),
+    'encrypt' => Filter::bool($env->get('SESSION_ENCRYPT', true)),
 
     /*
     |--------------------------------------------------------------------------
@@ -60,7 +88,7 @@ return [
     |
     */
 
-    'files' => storage_path('framework/sessions'),
+    'files' => \storage_path('framework/sessions'),
 
     /*
     |--------------------------------------------------------------------------
@@ -73,7 +101,7 @@ return [
     |
     */
 
-    'connection' => env('SESSION_CONNECTION'),
+    'connection' => Filter::nullableString($env->get('SESSION_CONNECTION', null)),
 
     /*
     |--------------------------------------------------------------------------
@@ -86,7 +114,7 @@ return [
     |
     */
 
-    'table' => env('SESSION_TABLE', 'sessions'),
+    'table' => Filter::string($env->get('SESSION_TABLE', 'sessions')),
 
     /*
     |--------------------------------------------------------------------------
@@ -101,7 +129,7 @@ return [
     |
     */
 
-    'store' => env('SESSION_STORE'),
+    'store' => Filter::nullableString($env->get('SESSION_STORE', null)),
 
     /*
     |--------------------------------------------------------------------------
@@ -127,10 +155,23 @@ return [
     |
     */
 
-    'cookie' => env(
+    'cookie' => Filter::string($env->get(
         'SESSION_COOKIE',
-        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
-    ),
+        (static function () use ($path, $domain, $secure, $env): string {
+            $prefix = '';
+
+            if ($path === '/' && $domain === null && $secure === true) {
+                $prefix = '__Host-';
+            } elseif ($secure === true) {
+                $prefix = '__Secure-';
+            }
+
+            $appName = Filter::string($env->get('APP_NAME'));
+            $appEnv = Filter::string($env->get('APP_ENV'));
+
+            return $prefix . Str::slug("session-{$appName}-{$appEnv}", '-', null);
+        })(),
+    )),
 
     /*
     |--------------------------------------------------------------------------
@@ -143,7 +184,7 @@ return [
     |
     */
 
-    'path' => env('SESSION_PATH', '/'),
+    'path' => $path,
 
     /*
     |--------------------------------------------------------------------------
@@ -156,7 +197,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN'),
+    'domain' => $domain,
 
     /*
     |--------------------------------------------------------------------------
@@ -169,7 +210,7 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE'),
+    'secure' => $secure,
 
     /*
     |--------------------------------------------------------------------------
@@ -182,7 +223,7 @@ return [
     |
     */
 
-    'http_only' => env('SESSION_HTTP_ONLY', true),
+    'http_only' => Filter::bool($env->get('SESSION_HTTP_ONLY', true)),
 
     /*
     |--------------------------------------------------------------------------
@@ -199,7 +240,7 @@ return [
     |
     */
 
-    'same_site' => env('SESSION_SAME_SITE', 'lax'),
+    'same_site' => Filter::string($env->get('SESSION_SAME_SITE', 'Strict')),
 
     /*
     |--------------------------------------------------------------------------
@@ -212,6 +253,5 @@ return [
     |
     */
 
-    'partitioned' => env('SESSION_PARTITIONED_COOKIE', false),
-
+    'partitioned' => Filter::bool($env->get('SESSION_PARTITIONED_COOKIE', false)),
 ];

@@ -1,7 +1,32 @@
 <?php
 
-return [
+/**
+ * Copyright © 2024+ Tomáš Chochola <chocholatom1997@gmail.com> - All Rights Reserved
+ *
+ * This software is the exclusive property of Tomáš Chochola, protected by copyright laws.
+ * Although the source code may be accessible, it is not free for use without a valid license.
+ * A valid license, obtainable through proper channels, is required for any software use.
+ * For licensing or inquiries, please contact Tomáš Chochola or refer to the GitHub Sponsors page.
+ *
+ * The full license terms are detailed in the LICENSE.md file within the source code repository.
+ * The terms are subject to changes. Users are encouraged to review them periodically.
+ *
+ * 🤵 The Proprietor: Tomáš Chochola
+ * - Role: The Creator, Proprietor & Project Visionary
+ * - Email: chocholatom1997@gmail.com
+ * - GitHub: https://github.com/tomchochola
+ * - Sponsor & License: https://github.com/sponsors/tomchochola
+ * - Web: https://premierstacks.com
+ */
 
+declare(strict_types=1);
+
+use Premierstacks\LaravelStack\Config\Env;
+use Premierstacks\PhpStack\Mixed\Filter;
+
+$env = Env::inject();
+
+return [
     /*
     |--------------------------------------------------------------------------
     | Default Mailer
@@ -14,7 +39,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'log'),
+    'default' => Filter::string($env->get('MAIL_MAILER', 'array')),
 
     /*
     |--------------------------------------------------------------------------
@@ -36,17 +61,16 @@ return [
     */
 
     'mailers' => [
-
         'smtp' => [
             'transport' => 'smtp',
-            'url' => env('MAIL_URL'),
-            'host' => env('MAIL_HOST', '127.0.0.1'),
-            'port' => env('MAIL_PORT', 2525),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
+            'url' => Filter::nullableString($env->get('MAIL_URL', null)),
+            'host' => Filter::string($env->get('MAIL_HOST', '127.0.0.1')),
+            'port' => Filter::int($env->get('MAIL_PORT', 2_525)),
+            'encryption' => Filter::string($env->get('MAIL_ENCRYPTION', 'tls')),
+            'username' => Filter::nullableString($env->get('MAIL_USERNAME', null)),
+            'password' => Filter::nullableString($env->get('MAIL_PASSWORD', null)),
             'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'local_domain' => Filter::nullableString($env->get('MAIL_EHLO_DOMAIN', null)),
         ],
 
         'ses' => [
@@ -55,7 +79,7 @@ return [
 
         'postmark' => [
             'transport' => 'postmark',
-            // 'message_stream_id' => env('POSTMARK_MESSAGE_STREAM_ID'),
+            // 'message_stream_id' => Filter::nullableString($env->get('POSTMARK_MESSAGE_STREAM_ID', null)),
             // 'client' => [
             //     'timeout' => 5,
             // ],
@@ -67,12 +91,12 @@ return [
 
         'sendmail' => [
             'transport' => 'sendmail',
-            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
+            'path' => Filter::string($env->get('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i')),
         ],
 
         'log' => [
             'transport' => 'log',
-            'channel' => env('MAIL_LOG_CHANNEL'),
+            'channel' => Filter::nullableString($env->get('MAIL_LOG_CHANNEL', null)),
         ],
 
         'array' => [
@@ -94,7 +118,6 @@ return [
                 'postmark',
             ],
         ],
-
     ],
 
     /*
@@ -109,8 +132,26 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => Filter::string($env->get('MAIL_FROM_ADDRESS', 'hello@example.com')),
+        'name' => Filter::string($env->get('MAIL_FROM_NAME', 'Example')),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Markdown Mail Settings
+    |--------------------------------------------------------------------------
+    |
+    | If you are using Markdown based email rendering, you may configure your
+    | theme and component paths here, allowing you to customize the design
+    | of the emails. Or, you may simply stick with the Laravel defaults!
+    |
+    */
+
+    'markdown' => [
+        'theme' => Filter::string($env->get('MAIL_MARKDOWN_THEME', 'default')),
+
+        'paths' => [
+            \resource_path('views/vendor/mail'),
+        ],
+    ],
 ];

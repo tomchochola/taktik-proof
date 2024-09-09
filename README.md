@@ -1,66 +1,152 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# [PHP Template](https://github.com/premierstacks/php-template) by [Tomáš Chochola](https://github.com/tomchochola)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Launch PHP projects swiftly with our comprehensive template: it's equipped with top-tier configurations for quality and efficiency, catering to diverse use cases. Ideal for streamlined, robust development.
 
-## About Laravel
+Our PHP Template is crafted to jumpstart your projects, providing a structured foundation and premium tooling configurations for code quality. This all-inclusive starter kit minimizes setup time, allowing you to dive into development with a framework that embodies best practices. Designed for accessibility, it suits developers of all levels, ensuring project quality from the get-go. The template is continually updated, ensuring adherence to the latest PHP standards and practices, making it a reliable and forward-thinking choice for your PHP projects.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 👌 Top Reasons to Opt for Our Premium PHP Template
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+By incorporating our Premium PHP Template into your workflow, you're not just starting a project; you're adopting a strategy for success, ensuring your PHP endeavors are built on a solid, high-quality foundation.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### ⏱️ Setup in Just 5 Minutes
 
-## Learning Laravel
+Launch your PHP projects effortlessly with our template, designed for swift and seamless setup. This ensures you can focus on development right away, leveraging a foundation that embodies best practices and premium configurations.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🕒 Hundreds of Hours of Research, So You Don't Have To
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Our PHP Template is built upon extensive research and the collective wisdom of PHP best practices. We've invested hundreds of hours to bring you a template that sets a high standard for code quality, saving you the time and effort of doing it all yourself.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 🎚️ Minimal Setup, Maximum Efficiency
 
-## Laravel Sponsors
+Enjoy the benefits of a well-structured foundation and premium configurations without the hassle of complex setup processes. Our template simplifies the initial steps, allowing you to achieve maximum efficiency from the outset.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 📘 Zero Expertise Required
 
-### Premium Partners
+Dive into your PHP project without needing deep expertise in configuration tools. Our template is accessible to developers of all levels, ensuring you can elevate your project's quality with ease, regardless of your experience with PHP tooling.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 🔄 Continuously Updated
 
-## Contributing
+With our commitment to maintaining the highest standards, our PHP Template is continuously updated to reflect the latest in PHP development practices and tooling configurations, ensuring your project remains current and competitive.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### ⚔️ Battle-Tested Reliability
 
-## Code of Conduct
+Rely on a template that has been rigorously tested across diverse PHP projects. Our PHP Template provides a dependable foundation, ensuring high code quality and consistency across your project lifecycle.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 🏆 Premier Quality Guarantee
 
-## Security Vulnerabilities
+Choosing our PHP Template signifies a commitment to excellence. This isn't just a starting point for PHP projects; it's a comprehensive solution that guarantees premier quality, setting your projects apart in the PHP community.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🛡️ License & Usage
 
-## License
+**Copyright © 2024+ Tomáš Chochola <chocholatom1997@gmail.com> - All Rights Reserved**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[![License](https://img.shields.io/badge/License-©_Proprietary-blue.svg)](LICENSE.md)
+
+This software is the exclusive property of Tomáš Chochola, protected by copyright laws.<br />
+Although the source code may be accessible, it is not free for use without a valid license.<br />
+A valid license, obtainable through proper channels, is required for any software use.<br />
+For licensing or inquiries, please contact Tomáš Chochola or refer to the GitHub Sponsors page.
+
+The full license terms are detailed in the [LICENSE.md](LICENSE.md) file within the source code repository.<br />
+The terms are subject to changes. Users are encouraged to review them periodically.
+
+### Acquiring a License
+
+To use this template, you must obtain a valid license available through a monthly subscription on the [GitHub Sponsors platform](https://github.com/sponsors/tomchochola).<br />
+This platform has been chosen for its reliability and ease of use, providing a secure and straightforward way to manage your subscription.
+
+### Note on Proprietary Dependencies
+
+This template may include or rely on proprietary libraries/packages.<br />
+Review and ensure your license covers the usage of these dependencies, or remove/replace them as needed.
+
+## 🖍️ Highlights
+
+- **Comprehensive Premium Configurations**: All of Tomáš Chochola's premium configurations are pre-configured, encompassing ESLint, Prettier, PHP CS Fixer, and PHPStan, to maintain the highest code quality standards.
+- **Streamlined Development Toolkit**: The template is equipped with an array of tools for linting, static analysis, code styling, and testing, ensuring a productive development environment.
+- **Scalable Project Foundation**: Designed to accommodate various PHP project types, the template's thoughtful structure supports both library development and executable PHP applications.
+- **Makefile-Driven Workflow**: Simplifies routine tasks such as testing, linting, and serving your application with predefined Makefile goals, streamlining your development and CI/CD pipeline crafting process.
+- **Modern PHP Practices**: Adopts contemporary PHP practices and standards, providing a solid base for building robust and maintainable PHP applications.
+
+## 🎨 Preconfigured Features
+
+The PHP Template is equipped with a comprehensive set of preconfigured features to enhance your development workflow and ensure adherence to best practices:
+
+- **ESLint**: Incorporates `@premierstacks/eslint-stack` for JavaScript linting, ensuring code quality and consistency within embedded scripts or standalone JavaScript files.
+- **Prettier**: Configured with `@premierstacks/prettier-stack` for code formatting, providing a unified code style across JavaScript and potentially other file formats.
+- **PHP CS Fixer**: Utilizes `premierstacks/php-cs-fixer-stack` for PHP code styling, aligning your PHP code with industry standards and best practices.
+- **PHPStan**: Employs `premierstacks/phpstan-stack` for static analysis, identifying potential issues in PHP code to maintain high code quality.
+- **PHPUnit**: Comes with a ready-to-use setup for unit testing with PHPUnit, fostering a test-driven development approach.
+- **Makefile Goals**: Includes versatile Makefile commands (`make local`, `make testing`, `make development`, `make staging`, `make production`, `make serve`, `make coverage`, `make check`, `make fix`) to streamline tasks like testing, linting, and deployment across various environments.
+- **Scalable Project Structure**: Provides a flexible foundation that supports a wide array of PHP project types, ensuring easy maintainability and scalability.
+- **Dotfiles**: Comes with essential configuration files (.gitignore, .editorconfig, .gitattributes, .prettierignore) pre-set to maintain a clean and consistent coding environment across various platforms and editors, ensuring smooth collaboration and integration.
+
+## 🎬 Get Started
+
+### 1️⃣ License Acquisition
+
+Secure your license at [Tomáš Chochola's GitHub Sponsors page](https://github.com/sponsors/tomchochola).
+
+### 2️⃣ Project Creation
+
+Use the `Use this template` button on the GitHub repository page to create a new repository from this template.<br />
+Select `Create a new repository` in the dropdown and follow the prompts.
+
+### 3️⃣ Customize Your Project
+
+Explore the generated repository.<br />
+Remove unnecessary components and adjust it to fit your project's needs.
+
+### 4️⃣ Attribution
+
+To comply with the license agreement regarding giving credits to the authors, please keep the `AUTHORS.md` file intact in your project repository.<br />
+Alternatively please ensure to manually give credits to the authors in your project documentation or wherever appropriate, as per the license agreement.
+
+### 5️⃣ Usage
+
+The template includes a Makefile with predefined goals to streamline development:
+
+```shell
+# Set up for environment-specific setups
+make local
+make testing
+make development
+make staging
+make production
+
+# Update all dependencies
+make update
+
+# Automatically fix code style issues
+make fix
+
+# Run linters and static analysis tools
+make check
+
+# Start a local development server
+make serve
+
+# Generate and serve test coverage reports
+make coverage
+```
+
+## 🤵 The Proprietor: Tomáš Chochola
+
+Elite developer crafting exclusive, enterprise-grade software, professional packages, and premium templates to elevate your digital landscape.
+
+- **Role**: The Creator, Proprietor & Project Visionary
+- **Email:** <chocholatom1997@gmail.com>
+- **GitHub:** [https://github.com/tomchochola](https://github.com/tomchochola)
+- **Sponsor & License:** [https://github.com/sponsors/tomchochola](https://github.com/sponsors/tomchochola)
+
+## 🌐 Discover Tomáš Chochola's GitHub Universe
+
+Explore the boundless creativity and innovation in [Tomáš Chochola's GitHub repository](https://github.com/tomchochola). As the epicenter of my digital creations, it offers an extensive collection of avant-garde software packages, refined libraries, and polished templates, meticulously crafted to enhance your development journey. Immerse yourself in a world where efficiency and elegance converge, and elevate your projects with tools that redefine excellence.
+
+## 💰 Empower Innovation: Support and Subscribe
+
+Your support transcends mere contributions; it's the lifeblood of innovation and growth. By subscribing for premium access or becoming a sponsor, you directly contribute to the advancement of high-caliber software. Embrace the opportunity to be part of a visionary journey by visiting my [GitHub Sponsors profile](https://github.com/sponsors/tomchochola).
+
+## 🤝 Join Forces with Tomáš Chochola
+
+Embark on a collaborative venture with a developer whose passion for perfection knows no bounds. Whether it's for groundbreaking startups, global enterprises, or transformative government projects, my arsenal of skills is at your command. Let's merge visions and craftsmanship to forge software that stands a class apart. Connect with me at [chocholatom1997@gmail.com](mailto:chocholatom1997@gmail.com) for collaborations that transcend conventional boundaries.

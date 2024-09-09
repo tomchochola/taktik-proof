@@ -1,12 +1,36 @@
 <?php
 
+/**
+ * Copyright © 2024+ Tomáš Chochola <chocholatom1997@gmail.com> - All Rights Reserved
+ *
+ * This software is the exclusive property of Tomáš Chochola, protected by copyright laws.
+ * Although the source code may be accessible, it is not free for use without a valid license.
+ * A valid license, obtainable through proper channels, is required for any software use.
+ * For licensing or inquiries, please contact Tomáš Chochola or refer to the GitHub Sponsors page.
+ *
+ * The full license terms are detailed in the LICENSE.md file within the source code repository.
+ * The terms are subject to changes. Users are encouraged to review them periodically.
+ *
+ * 🤵 The Proprietor: Tomáš Chochola
+ * - Role: The Creator, Proprietor & Project Visionary
+ * - Email: chocholatom1997@gmail.com
+ * - GitHub: https://github.com/tomchochola
+ * - Sponsor & License: https://github.com/sponsors/tomchochola
+ * - Web: https://premierstacks.com
+ */
+
+declare(strict_types=1);
+
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 use Monolog\Processor\PsrLogMessageProcessor;
+use Premierstacks\LaravelStack\Config\Env;
+use Premierstacks\PhpStack\Mixed\Filter;
+
+$env = Env::inject();
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Log Channel
@@ -18,7 +42,7 @@ return [
     |
     */
 
-    'default' => env('LOG_CHANNEL', 'stack'),
+    'default' => Filter::string($env->get('LOG_CHANNEL', 'stack')),
 
     /*
     |--------------------------------------------------------------------------
@@ -32,8 +56,8 @@ return [
     */
 
     'deprecations' => [
-        'channel' => env('LOG_DEPRECATIONS_CHANNEL', 'null'),
-        'trace' => env('LOG_DEPRECATIONS_TRACE', false),
+        'channel' => Filter::string($env->get('LOG_DEPRECATIONS_CHANNEL', 'off')),
+        'trace' => Filter::bool($env->get('LOG_DEPRECATIONS_TRACE', false)),
     ],
 
     /*
@@ -51,54 +75,53 @@ return [
     */
 
     'channels' => [
-
         'stack' => [
             'driver' => 'stack',
-            'channels' => explode(',', env('LOG_STACK', 'single')),
+            'channels' => \explode(',', Filter::string($env->get('LOG_STACK', 'single'))),
             'ignore_exceptions' => false,
         ],
 
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/laravel.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
+            'path' => \storage_path('logs/laravel.log'),
+            'level' => Filter::string($env->get('LOG_LEVEL', 'debug')),
             'replace_placeholders' => true,
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/laravel.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
-            'days' => env('LOG_DAILY_DAYS', 14),
+            'path' => \storage_path('logs/laravel.log'),
+            'level' => Filter::string($env->get('LOG_LEVEL', 'debug')),
+            'days' => Filter::int($env->get('LOG_DAILY_DAYS', 14)),
             'replace_placeholders' => true,
         ],
 
         'slack' => [
             'driver' => 'slack',
-            'url' => env('LOG_SLACK_WEBHOOK_URL'),
-            'username' => env('LOG_SLACK_USERNAME', 'Laravel Log'),
-            'emoji' => env('LOG_SLACK_EMOJI', ':boom:'),
-            'level' => env('LOG_LEVEL', 'critical'),
+            'url' => Filter::nullableString($env->get('LOG_SLACK_WEBHOOK_URL', null)),
+            'username' => Filter::string($env->get('LOG_SLACK_USERNAME', 'Laravel Log')),
+            'emoji' => Filter::string($env->get('LOG_SLACK_EMOJI', ':boom:')),
+            'level' => Filter::string($env->get('LOG_LEVEL', 'critical')),
             'replace_placeholders' => true,
         ],
 
         'papertrail' => [
             'driver' => 'monolog',
-            'level' => env('LOG_LEVEL', 'debug'),
-            'handler' => env('LOG_PAPERTRAIL_HANDLER', SyslogUdpHandler::class),
+            'level' => Filter::string($env->get('LOG_LEVEL', 'debug')),
+            'handler' => Filter::string($env->get('LOG_PAPERTRAIL_HANDLER', SyslogUdpHandler::class)),
             'handler_with' => [
-                'host' => env('PAPERTRAIL_URL'),
-                'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
+                'host' => Filter::nullableString($env->get('PAPERTRAIL_URL', null)),
+                'port' => Filter::nullableString($env->get('PAPERTRAIL_PORT', null)),
+                'connectionString' => 'tls://' . Filter::nullableString($env->get('PAPERTRAIL_URL', null)) . ':' . Filter::nullableString($env->get('PAPERTRAIL_PORT', null)),
             ],
             'processors' => [PsrLogMessageProcessor::class],
         ],
 
         'stderr' => [
             'driver' => 'monolog',
-            'level' => env('LOG_LEVEL', 'debug'),
+            'level' => Filter::string($env->get('LOG_LEVEL', 'debug')),
             'handler' => StreamHandler::class,
-            'formatter' => env('LOG_STDERR_FORMATTER'),
+            'formatter' => Filter::nullableString($env->get('LOG_STDERR_FORMATTER', null)),
             'with' => [
                 'stream' => 'php://stderr',
             ],
@@ -107,14 +130,14 @@ return [
 
         'syslog' => [
             'driver' => 'syslog',
-            'level' => env('LOG_LEVEL', 'debug'),
-            'facility' => env('LOG_SYSLOG_FACILITY', LOG_USER),
+            'level' => Filter::string($env->get('LOG_LEVEL', 'debug')),
+            'facility' => Filter::int($env->get('LOG_SYSLOG_FACILITY', \LOG_USER)),
             'replace_placeholders' => true,
         ],
 
         'errorlog' => [
             'driver' => 'errorlog',
-            'level' => env('LOG_LEVEL', 'debug'),
+            'level' => Filter::string($env->get('LOG_LEVEL', 'debug')),
             'replace_placeholders' => true,
         ],
 
@@ -123,10 +146,13 @@ return [
             'handler' => NullHandler::class,
         ],
 
-        'emergency' => [
-            'path' => storage_path('logs/laravel.log'),
+        'off' => [
+            'driver' => 'monolog',
+            'handler' => NullHandler::class,
         ],
 
+        'emergency' => [
+            'path' => \storage_path('logs/laravel.log'),
+        ],
     ],
-
 ];

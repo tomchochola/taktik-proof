@@ -1,13 +1,41 @@
 {
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build"
-    },
-    "devDependencies": {
-        "axios": "^1.6.4",
-        "laravel-vite-plugin": "^1.0",
-        "vite": "^5.0"
+  "name": "@premierstacks/laravel-template",
+  "description": "laravel template",
+  "keywords": [
+    "premierstacks",
+    "laravel-template",
+    "tomchochola"
+  ],
+  "homepage": "https://github.com/premierstacks/laravel-template",
+  "bugs": {
+    "email": "chocholatom1997@gmail.com",
+    "url": "https://github.com/premierstacks/laravel-template/issues"
+  },
+  "license": "SEE LICENSE IN ./LICENSE.md",
+  "author": {
+    "email": "chocholatom1997@gmail.com",
+    "name": "Tomáš Chochola",
+    "url": "https://github.com/tomchochola"
+  },
+  "contributors": [
+    {
+      "email": "chocholatom1997@gmail.com",
+      "name": "Tomáš Chochola",
+      "url": "https://github.com/tomchochola"
     }
+  ],
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/tomchochola"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/premierstacks/laravel-template.git"
+  },
+  "devDependencies": {
+    "@premierstacks/prettier-stack": "github:premierstacks/prettier-stack",
+    "@premierstacks/eslint-stack": "github:premierstacks/eslint-stack"
+  },
+  "private": true,
+  "type": "module"
 }

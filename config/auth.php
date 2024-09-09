@@ -1,7 +1,34 @@
 <?php
 
-return [
+/**
+ * Copyright © 2024+ Tomáš Chochola <chocholatom1997@gmail.com> - All Rights Reserved
+ *
+ * This software is the exclusive property of Tomáš Chochola, protected by copyright laws.
+ * Although the source code may be accessible, it is not free for use without a valid license.
+ * A valid license, obtainable through proper channels, is required for any software use.
+ * For licensing or inquiries, please contact Tomáš Chochola or refer to the GitHub Sponsors page.
+ *
+ * The full license terms are detailed in the LICENSE.md file within the source code repository.
+ * The terms are subject to changes. Users are encouraged to review them periodically.
+ *
+ * 🤵 The Proprietor: Tomáš Chochola
+ * - Role: The Creator, Proprietor & Project Visionary
+ * - Email: chocholatom1997@gmail.com
+ * - GitHub: https://github.com/tomchochola
+ * - Sponsor & License: https://github.com/sponsors/tomchochola
+ * - Web: https://premierstacks.com
+ */
 
+declare(strict_types=1);
+
+use App\Models\User;
+use Premierstacks\LaravelStack\Auth\Guards\UnlimitedTokenGuard;
+use Premierstacks\LaravelStack\Config\Env;
+use Premierstacks\PhpStack\Mixed\Filter;
+
+$env = Env::inject();
+
+return [
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults
@@ -14,8 +41,9 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+        'guard' => Filter::string($env->get('AUTH_GUARD', 'users')),
+        'provider' => Filter::string($env->get('AUTH_PROVIDER', 'users')),
+        'passwords' => Filter::string($env->get('AUTH_PASSWORD_BROKER', 'users')),
     ],
 
     /*
@@ -36,8 +64,8 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
+        'users' => [
+            'driver' => UnlimitedTokenGuard::class,
             'provider' => 'users',
         ],
     ],
@@ -62,13 +90,8 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => Filter::string($env->get('AUTH_MODEL', User::class)),
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
@@ -93,7 +116,7 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'table' => Filter::string($env->get('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'users_password_reset_tokens')),
             'expire' => 60,
             'throttle' => 60,
         ],
@@ -110,6 +133,21 @@ return [
     |
     */
 
-    'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
+    'password_timeout' => Filter::int($env->get('AUTH_PASSWORD_TIMEOUT', 10_800)),
 
+    /*
+    |--------------------------------------------------------------------------
+    | E-mail verification Timeout
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define the amount of seconds before a e-mail verification
+    | times out and the user is prompted to re-enter their e-mail via the
+    | confirmation screen. By default, the timeout lasts for three hours.
+    | Null is also allowed to send never expiring e-mails.
+    |
+    */
+
+    'verification' => [
+        'expire' => Filter::int($env->get('AUTH_EMAIL_VERIFICATION_TIMEOUT', 10_800)),
+    ],
 ];

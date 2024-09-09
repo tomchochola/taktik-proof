@@ -1,7 +1,32 @@
 <?php
 
-return [
+/**
+ * Copyright © 2024+ Tomáš Chochola <chocholatom1997@gmail.com> - All Rights Reserved
+ *
+ * This software is the exclusive property of Tomáš Chochola, protected by copyright laws.
+ * Although the source code may be accessible, it is not free for use without a valid license.
+ * A valid license, obtainable through proper channels, is required for any software use.
+ * For licensing or inquiries, please contact Tomáš Chochola or refer to the GitHub Sponsors page.
+ *
+ * The full license terms are detailed in the LICENSE.md file within the source code repository.
+ * The terms are subject to changes. Users are encouraged to review them periodically.
+ *
+ * 🤵 The Proprietor: Tomáš Chochola
+ * - Role: The Creator, Proprietor & Project Visionary
+ * - Email: chocholatom1997@gmail.com
+ * - GitHub: https://github.com/tomchochola
+ * - Sponsor & License: https://github.com/sponsors/tomchochola
+ * - Web: https://premierstacks.com
+ */
 
+declare(strict_types=1);
+
+use Premierstacks\LaravelStack\Config\Env;
+use Premierstacks\PhpStack\Mixed\Filter;
+
+$env = Env::inject();
+
+return [
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -13,7 +38,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => Filter::string($env->get('APP_NAME', 'Laravel')),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +51,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => Filter::string($env->get('APP_ENV', 'production')),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +64,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => Filter::bool($env->get('APP_DEBUG', false)),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +77,11 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => Filter::string($env->get('APP_URL', 'http://localhost:8000')),
+
+    'frontend_url' => Filter::string($env->get('FRONTEND_URL', 'http://localhost:3000')),
+
+    'asset_url' => Filter::nullableString($env->get('ASSET_URL', null)),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +94,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'UTC'),
+    'timezone' => Filter::string($env->get('APP_TIMEZONE', 'UTC')),
 
     /*
     |--------------------------------------------------------------------------
@@ -78,11 +107,18 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    'locale' => Filter::string($env->get('APP_LOCALE', 'en')),
 
-    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
+    'locales' => [
+        ...\array_filter(
+            \str_getcsv(Filter::string($env->get('APP_LOCALES', 'en,cs,sk'))),
+            static fn(mixed $value): bool => $value !== null,
+        ),
+    ],
 
-    'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
+    'fallback_locale' => Filter::string($env->get('APP_FALLBACK_LOCALE', 'en')),
+
+    'faker_locale' => Filter::string($env->get('APP_FAKER_LOCALE', 'en_US')),
 
     /*
     |--------------------------------------------------------------------------
@@ -97,11 +133,12 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    'key' => env('APP_KEY'),
+    'key' => Filter::string($env->get('APP_KEY')),
 
     'previous_keys' => [
-        ...array_filter(
-            explode(',', env('APP_PREVIOUS_KEYS', ''))
+        ...\array_filter(
+            \str_getcsv(Filter::string($env->get('APP_PREVIOUS_KEYS', ''))),
+            static fn(mixed $value): bool => $value !== null,
         ),
     ],
 
@@ -119,8 +156,7 @@ return [
     */
 
     'maintenance' => [
-        'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
-        'store' => env('APP_MAINTENANCE_STORE', 'database'),
+        'driver' => Filter::string($env->get('APP_MAINTENANCE_DRIVER', 'cache')),
+        'store' => Filter::nullableString($env->get('APP_MAINTENANCE_STORE', null)),
     ],
-
 ];

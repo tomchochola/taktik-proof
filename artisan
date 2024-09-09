@@ -1,15 +1,38 @@
 #!/usr/bin/env php
 <?php
 
+/**
+ * Copyright © 2024+ Tomáš Chochola <chocholatom1997@gmail.com> - All Rights Reserved
+ *
+ * This software is the exclusive property of Tomáš Chochola, protected by copyright laws.
+ * Although the source code may be accessible, it is not free for use without a valid license.
+ * A valid license, obtainable through proper channels, is required for any software use.
+ * For licensing or inquiries, please contact Tomáš Chochola or refer to the GitHub Sponsors page.
+ *
+ * The full license terms are detailed in the LICENSE.md file within the source code repository.
+ * The terms are subject to changes. Users are encouraged to review them periodically.
+ *
+ * 🤵 The Proprietor: Tomáš Chochola
+ * - Role: The Creator, Proprietor & Project Visionary
+ * - Email: chocholatom1997@gmail.com
+ * - GitHub: https://github.com/tomchochola
+ * - Sponsor & License: https://github.com/sponsors/tomchochola
+ * - Web: https://premierstacks.com
+ */
+
+declare(strict_types=1);
+
+use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 
-define('LARAVEL_START', microtime(true));
+\define('LARAVEL_START', \microtime(true));
 
-// Register the Composer autoloader...
-require __DIR__.'/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
-// Bootstrap Laravel and handle the command...
-$status = (require_once __DIR__.'/bootstrap/app.php')
-    ->handleCommand(new ArgvInput);
+$app = require_once __DIR__ . '/bootstrap/app.php';
+
+\assert($app instanceof Application);
+
+$status = $app->handleCommand(new ArgvInput());
 
 exit($status);

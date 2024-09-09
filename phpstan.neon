@@ -1,0 +1,15 @@
+includes:
+  - ./vendor/premierstacks/phpstan-stack/src/configs/premierstacks.neon
+
+parameters:
+  paths:
+    - ./app
+    - ./bootstrap/app.php
+    - ./bootstrap/providers.php
+    - ./config
+    - ./database
+    - ./lang
+    - ./public/index.php
+    - ./resources
+    - ./routes
+    - ./tests
