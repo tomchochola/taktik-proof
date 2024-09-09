@@ -3,6 +3,7 @@
 .idea
 .vscode
 .fleet
+.zed
 
 # node
 /node_modules
@@ -19,6 +20,9 @@
 
 # php-cs-fixer
 /.php-cs-fixer.cache
+
+# phpactor
+/.phpactor.json
 
 # vendor
 /public/vendor

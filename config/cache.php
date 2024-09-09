@@ -66,6 +66,7 @@ return [
             'table' => Filter::string($env->get('DB_CACHE_TABLE', 'cache')),
             'connection' => Filter::nullableString($env->get('DB_CACHE_CONNECTION', null)),
             'lock_connection' => Filter::nullableString($env->get('DB_CACHE_LOCK_CONNECTION', null)),
+            'lock_table' => Filter::string($env->get('DB_CACHE_LOCK_TABLE', null)),
         ],
 
         'file' => [

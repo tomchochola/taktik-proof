@@ -70,7 +70,7 @@ return [
             'username' => Filter::nullableString($env->get('MAIL_USERNAME', null)),
             'password' => Filter::nullableString($env->get('MAIL_PASSWORD', null)),
             'timeout' => null,
-            'local_domain' => Filter::nullableString($env->get('MAIL_EHLO_DOMAIN', null)),
+            'local_domain' => Filter::nullableString($env->get('MAIL_EHLO_DOMAIN', \parse_url(Filter::string($env->get('APP_URL', 'http://localhost:8000')), \PHP_URL_HOST))),
         ],
 
         'ses' => [

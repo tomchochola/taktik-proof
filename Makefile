@@ -58,6 +58,8 @@ clean:
 	rm -rf ./.php-cs-fixer.cache
 	rm -rf ./.phpunit.cache
 	rm -rf ./.phpunit.coverage
+	rm -rf ./bootstrap/cache/packages.php
+	rm -rf ./bootstrap/cache/services.php
 
 .PHONY: update
 update:
@@ -74,6 +76,8 @@ serve: ./vendor/autoload.php ./artisan ./bootstrap/cache/services.php ./bootstra
 local:
 	${MAKE_COMPOSER} install
 	npm install --install-links --include prod --include dev --include peer --include optional
+	rm -rf ./bootstrap/cache/packages.php
+	rm -rf ./bootstrap/cache/services.php
 	${MAKE_ARTISAN} optimize:clear
 	${MAKE_ARTISAN} package:discover
 	${MAKE_ARTISAN} vendor:publish --tag=laravel-assets --force
@@ -92,6 +96,8 @@ development: testing
 staging:
 	${MAKE_COMPOSER} install
 	npm install --install-links --include prod --include dev --include peer --include optional
+	rm -rf ./bootstrap/cache/packages.php
+	rm -rf ./bootstrap/cache/services.php
 	${MAKE_ARTISAN} optimize:clear
 	${MAKE_ARTISAN} package:discover
 	${MAKE_ARTISAN} vendor:publish --tag=laravel-assets --force
