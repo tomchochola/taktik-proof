@@ -73,7 +73,7 @@ serve: ./vendor/autoload.php ./artisan ./bootstrap/cache/services.php ./bootstra
 
 # Deploy / Release
 .PHONY: local
-local: .env.local
+local: .env
 	${MAKE_COMPOSER} install
 	npm install --install-links --include prod --include dev --include peer --include optional
 	rm -rf ./bootstrap/cache/packages.php
@@ -87,13 +87,13 @@ local: .env.local
 	${MAKE_ARTISAN} queue:restart
 
 .PHONY: testing
-testing: .env.testing local
+testing: local
 
 .PHONY: development
-development: .env.development testing
+development: testing
 
 .PHONY: staging
-staging: .env.staging
+staging: .env
 	${MAKE_COMPOSER} install
 	npm install --install-links --include prod --include dev --include peer --include optional
 	rm -rf ./bootstrap/cache/packages.php
@@ -109,7 +109,7 @@ staging: .env.staging
 	${MAKE_ARTISAN} queue:restart
 
 .PHONY: production
-production: .env.production staging
+production: staging
 
 # Dependencies
 ./vendor ./composer.lock ./vendor/bin/phpstan ./vendor/bin/php-cs-fixer ./vendor/bin/phpunit ./vendor/autoload.php:
