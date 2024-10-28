@@ -63,7 +63,7 @@ http --session=session -f POST http://localhost:8000/api/sessions/invalidate
 http --session=session -f POST http://localhost:8000/api/sessions/regenerate
 
 # Retrieve verification details
-http --session=session -f GET http://localhost:8000/api/verifications/show verification_id==$(read -p "Enter verification_id: " verification_id && echo ${verification_id})
+http --session=session -f GET http://localhost:8000/api/verifications/show verification_id==$(read -p "Enter verification_id: " && echo ${REPLY})
 
 # Complete verification process
-http --session=session -f POST http://localhost:8000/api/verifications/complete verification_id=$(read -p "Enter verification_id: " verification_id && echo ${verification_id}) token=1111
+http --session=session -f POST http://localhost:8000/api/verifications/complete verification_id=$(read -p "Enter verification_id: " && echo ${REPLY}) token=1111

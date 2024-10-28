@@ -3,9 +3,9 @@
   "description": "laravel template",
   "type": "project",
   "keywords": [
+    "tomchochola",
     "premierstacks",
-    "laravel-template",
-    "tomchochola"
+    "laravel-template"
   ],
   "homepage": "https://github.com/premierstacks/laravel-template",
   "readme": "./README.md",
@@ -31,14 +31,14 @@
     }
   ],
   "require": {
-    "php": "^8.3",
     "laravel/tinker": "^2.9",
+    "nunomaduro/collision": "^8.4",
+    "php": "8.3.*",
     "premierstacks/laravel-stack": "@dev"
   },
   "require-dev": {
     "fakerphp/faker": "^1.23",
     "mockery/mockery": "^1.6",
-    "nunomaduro/collision": "^8.4",
     "phpunit/phpunit": "^11.3",
     "premierstacks/php-cs-fixer-stack": "@dev",
     "premierstacks/phpstan-stack": "@dev"
@@ -81,16 +81,20 @@
       "pestphp/pest-plugin": true,
       "php-http/discovery": true
     },
-    "preferred-install": "dist",
     "audit": {
       "abandoned": "fail"
     },
-    "optimize-autoloader": true,
     "platform-check": true
   },
   "extra": {
     "laravel": {
       "dont-discover": []
     }
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "rm -rf ./bootstrap/cache/*",
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump"
+    ]
   }
 }
