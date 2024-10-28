@@ -37,7 +37,8 @@ return [
     'disks' => [
         'local' => [
             'driver' => 'local',
-            'root' => \storage_path('app'),
+            'root' => \storage_path('app/private'),
+            'visibility' => 'private',
             'throw' => true,
         ],
 
@@ -58,6 +59,7 @@ return [
             'url' => Filter::nullableString($env->get('AWS_URL', null)),
             'endpoint' => Filter::nullableString($env->get('AWS_ENDPOINT', null)),
             'use_path_style_endpoint' => Filter::bool($env->get('AWS_USE_PATH_STYLE_ENDPOINT', false)),
+            'visibility' => 'public',
             'throw' => true,
         ],
     ],
