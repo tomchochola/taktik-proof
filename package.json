@@ -1,15 +1,15 @@
 {
-  "name": "@premierstacks/laravel-template",
-  "description": "laravel template",
+  "name": "@premierstacks/laravel-app-template",
+  "description": "laravel app template",
   "keywords": [
     "tomchochola",
     "premierstacks",
-    "laravel-template"
+    "laravel-app-template"
   ],
-  "homepage": "https://github.com/premierstacks/laravel-template",
+  "homepage": "https://github.com/premierstacks/laravel-app-template",
   "bugs": {
     "email": "chocholatom1997@gmail.com",
-    "url": "https://github.com/premierstacks/laravel-template/issues"
+    "url": "https://github.com/premierstacks/laravel-app-template/issues"
   },
   "license": "SEE LICENSE IN ./LICENSE.md",
   "author": {
@@ -30,7 +30,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/premierstacks/laravel-template.git"
+    "url": "https://github.com/premierstacks/laravel-app-template.git"
   },
   "devDependencies": {
     "@premierstacks/eslint-stack": "github:premierstacks/eslint-stack",

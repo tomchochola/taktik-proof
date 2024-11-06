@@ -1,13 +1,13 @@
 {
-  "name": "premierstacks/laravel-template",
-  "description": "laravel template",
+  "name": "premierstacks/laravel-app-template",
+  "description": "laravel app template",
   "type": "project",
   "keywords": [
     "tomchochola",
     "premierstacks",
-    "laravel-template"
+    "laravel-app-template"
   ],
-  "homepage": "https://github.com/premierstacks/laravel-template",
+  "homepage": "https://github.com/premierstacks/laravel-app-template",
   "readme": "./README.md",
   "license": "proprietary",
   "authors": [
@@ -20,9 +20,9 @@
   ],
   "support": {
     "email": "chocholatom1997@gmail.com",
-    "issues": "https://github.com/premierstacks/laravel-template/issues",
-    "source": "https://github.com/premierstacks/laravel-template.git",
-    "docs": "https://github.com/premierstacks/laravel-template"
+    "issues": "https://github.com/premierstacks/laravel-app-template/issues",
+    "source": "https://github.com/premierstacks/laravel-app-template.git",
+    "docs": "https://github.com/premierstacks/laravel-app-template"
   },
   "funding": [
     {
