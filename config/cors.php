@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+use Premierstacks\LaravelStack\Config\Env;
+use Premierstacks\PhpStack\Mixed\Filter;
+
+$env = Env::inject();
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -20,7 +25,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [Filter::string($env->get('FRONTEND_URL', 'http://localhost:3000'))],
 
     'allowed_origins_patterns' => [],
 

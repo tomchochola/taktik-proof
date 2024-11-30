@@ -48,6 +48,7 @@ return [
         'users' => [
             'driver' => UnlimitedTokenGuard::class,
             'provider' => 'users',
+            'ability' => true, // or gate ability
         ],
     ],
 
