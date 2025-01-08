@@ -34,7 +34,7 @@ Resolver::router()->view('api/swagger', 'psls::swagger', [
     'url' => Resolver::urlGeneratorContract()->to('docs/openapi.json'),
 ]);
 
-Resolver::routeRegistrar()->prefix('api')->middleware(['encrypted_cookies', 'session', 'api_form_json', SmartTransactionMiddleware::class])->group(static function (Router $router): void {
+Resolver::routeRegistrar()->prefix('api')->middleware(['encrypted_cookies', 'api_form_json', SmartTransactionMiddleware::class])->group(static function (Router $router): void {
     Resolver::routeRegistrar()->prefix('authenticatable')->middleware([SetAuthDefaultsMiddleware::class . ':users', ThrottleFailExceptMiddleware::class . ':fail,5,600', ThrottlePassMiddleware::class . ':pass,5,600'])->group(static function (Router $router): void {
         $router->post('retrieve', [RetrieveAuthenticatableController::class, 'handle']);
         $router->post('login_verification', [OccupiedEmailVerificationController::class, 'handle'])->setDefaults([
