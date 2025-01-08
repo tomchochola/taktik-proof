@@ -61,6 +61,9 @@ return [
             'use_path_style_endpoint' => Filter::bool($env->get('AWS_USE_PATH_STYLE_ENDPOINT', false)),
             'visibility' => 'public',
             'throw' => true,
+            'options' => [
+                'ACL' => '',
+            ],
         ],
     ],
 
