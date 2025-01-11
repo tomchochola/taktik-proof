@@ -41,13 +41,6 @@ clean:
 	rm -rf ./package-lock.json
 	rm -rf ./vendor
 
-.PHONY: commit
-commit: fix check compress
-
-.PHONY: compress
-compress: ./node_modules/.bin/svgo $(shell rg --files --hidden --iglob '!.git' --iglob '*.svg')
-	rg --files --hidden --iglob '!.git' --iglob '*.svg' | xargs -n 1 -P 0 ./node_modules/.bin/svgo --multipass --eol=lf --indent=2 --final-newline
-
 .PHONY: coverage
 coverage: ./.phpunit.coverage/html
 	${MAKE_PHP} -S 0.0.0.0:8000 -t ./.phpunit.coverage/html
@@ -137,7 +130,7 @@ test_phpunit: ./.phpunit.coverage/html
 testing: local
 
 # Dependencies
- ./node_modules ./node_modules/.bin/eslint ./node_modules/.bin/prettier ./node_modules/.bin/svgo: ./package-lock.json
+ ./node_modules ./node_modules/.bin/eslint ./node_modules/.bin/prettier: ./package-lock.json
 	npm install --install-links --include prod --include dev --include peer --include optional
 	touch ./package-lock.json
 	touch ./node_modules

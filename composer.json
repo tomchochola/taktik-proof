@@ -4,12 +4,13 @@
   "type": "project",
   "keywords": [
     "tomchochola",
+    "tomaschochola",
     "premierstacks",
     "laravel-app-template"
   ],
   "homepage": "https://github.com/premierstacks/laravel-app-template",
   "readme": "./README.md",
-  "license": "proprietary",
+  "license": "CC-BY-ND-4.0",
   "authors": [
     {
       "name": "Tomáš Chochola",
@@ -33,7 +34,7 @@
   "require": {
     "laravel/tinker": "^2.9",
     "nunomaduro/collision": "^8.4",
-    "php": "8.3.*",
+    "php": "~8.3.0",
     "premierstacks/laravel-stack": "@dev"
   },
   "require-dev": {
@@ -59,20 +60,24 @@
   "prefer-stable": true,
   "repositories": [
     {
-      "type": "git",
-      "url": "https://github.com/premierstacks/php-cs-fixer-stack.git"
+      "type": "vcs",
+      "url": "https://github.com/premierstacks/php-cs-fixer-stack.git",
+      "no-api": true
     },
     {
-      "type": "git",
-      "url": "https://github.com/premierstacks/phpstan-stack.git"
+      "type": "vcs",
+      "url": "https://github.com/premierstacks/phpstan-stack.git",
+      "no-api": true
     },
     {
-      "type": "git",
-      "url": "https://github.com/premierstacks/php-stack.git"
+      "type": "vcs",
+      "url": "https://github.com/premierstacks/php-stack.git",
+      "no-api": true
     },
     {
-      "type": "git",
-      "url": "https://github.com/premierstacks/laravel-stack.git"
+      "type": "vcs",
+      "url": "https://github.com/premierstacks/laravel-stack.git",
+      "no-api": true
     }
   ],
   "config": {
