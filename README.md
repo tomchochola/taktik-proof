@@ -267,26 +267,13 @@ The following is a breakdown of the folder and file structure within this reposi
 
 ```bash
 .
-├── .editorconfig
-├── .env.development.example
-├── .env.local.example
-├── .env.production.example
-├── .env.staging.example
-├── .env.testing.example
-├── .gitattributes
-├── .gitignore
-├── .php-cs-fixer.php
-├── .prettierignore
-├── AUTHORS.md
-├── LICENSE.md
-├── Makefile
-├── README.md
 ├── app
 │   ├── Models
 │   │   └── User.php
 │   └── Providers
 │       └── AppServiceProvider.php
 ├── artisan
+├── AUTHORS.md
 ├── bootstrap
 │   ├── app.php
 │   ├── cache
@@ -313,8 +300,19 @@ The following is a breakdown of the folder and file structure within this reposi
 │   │   ├── 0001_01_01_000000_create_framework_tables.php
 │   │   └── 0001_01_01_000001_create_auth_tables.php
 │   └── seeders
-│       └── DatabaseSeeder.php
+│       ├── DatabaseSeeder.php
+│       └── UserSeeder.php
+├── docs
+│   └── application_documentation.md
+├── .editorconfig
+├── .env.development.example
+├── .env.local.example
+├── .env.production.example
+├── .env.staging.example
+├── .env.testing.example
 ├── eslint.config.js
+├── .gitattributes
+├── .gitignore
 ├── lang
 │   ├── cs
 │   │   ├── actions.php
@@ -343,33 +341,46 @@ The following is a breakdown of the folder and file structure within this reposi
 │   │   ├── statuses.php
 │   │   └── validation.php
 │   └── sk.json
+├── LICENSE
+├── Makefile
 ├── package.json
+├── .php-cs-fixer.php
 ├── phpstan.neon
 ├── phpunit.xml
 ├── prettier.config.js
+├── .prettierignore
+├── provision
+│   ├── cron
+│   │   └── scheduler.sh
+│   └── supervisor
+│       └── queue_worker.sh
 ├── public
+│   ├── apple-touch-icon.png
 │   ├── docs
 │   │   ├── httpie.sh
 │   │   └── openapi.json
 │   ├── favicon.ico
+│   ├── favicon-16x16.png
+│   ├── favicon-32x32.png
 │   ├── index.php
 │   └── robots.txt
+├── README.md
 ├── resources
 │   └── views
 │       └── errors
 │           ├── 1xx.blade.php
 │           ├── 2xx.blade.php
 │           ├── 3xx.blade.php
+│           ├── 4xx.blade.php
 │           ├── 401.blade.php
 │           ├── 402.blade.php
 │           ├── 403.blade.php
 │           ├── 404.blade.php
 │           ├── 419.blade.php
 │           ├── 429.blade.php
-│           ├── 4xx.blade.php
+│           ├── 5xx.blade.php
 │           ├── 500.blade.php
-│           ├── 503.blade.php
-│           └── 5xx.blade.php
+│           └── 503.blade.php
 ├── routes
 │   ├── console.php
 │   └── http.php
@@ -391,5 +402,5 @@ The following is a breakdown of the folder and file structure within this reposi
     └── Unit
         └── ExampleTest.php
 
-34 directories, 89 files
+39 directories, 96 files
 ```
