@@ -44,10 +44,10 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
+            'scheme' => Filter::string($env->get('MAIL_SCHEME', 'tls')),
             'url' => Filter::nullableString($env->get('MAIL_URL', null)),
             'host' => Filter::string($env->get('MAIL_HOST', '127.0.0.1')),
             'port' => Filter::int($env->get('MAIL_PORT', 2_525)),
-            'encryption' => Filter::string($env->get('MAIL_ENCRYPTION', 'tls')),
             'username' => Filter::nullableString($env->get('MAIL_USERNAME', null)),
             'password' => Filter::nullableString($env->get('MAIL_PASSWORD', null)),
             'timeout' => null,

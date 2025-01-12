@@ -1,4 +1,5 @@
 {
+  "$schema": "https://getcomposer.org/schema.json",
   "name": "premierstacks/laravel-app-template",
   "description": "laravel app template",
   "type": "project",
