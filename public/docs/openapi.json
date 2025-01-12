@@ -753,7 +753,7 @@
       "url": {
         "description": "url",
         "type": "string",
-        "format": "uri",
+        "format": "url",
         "pattern": ".+",
         "minLength": 1,
         "maxLength": 1024,
@@ -762,7 +762,7 @@
       "nullableUrl": {
         "description": "url",
         "type": "string",
-        "format": "uri",
+        "format": "url",
         "pattern": ".+",
         "minLength": 1,
         "maxLength": 1024,
@@ -1015,11 +1015,15 @@
       },
       "integer": {
         "description": "integer",
-        "type": "integer"
+        "type": "integer",
+        "minimum": -9223372036854775808,
+        "maximum": 9223372036854775807
       },
       "nullableInteger": {
         "description": "integer or null",
         "type": "integer",
+        "minimum": -9223372036854775808,
+        "maximum": 9223372036854775807,
         "nullable": true
       },
       "number": {
@@ -1367,10 +1371,46 @@
         "description": "No content"
       },
       "4xx": {
-        "description": "Client error"
+        "description": "Client error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "json:api document",
+              "type": "object",
+              "required": ["errors"],
+              "properties": {
+                "errors": {
+                  "description": "json:api errors",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "5xx": {
-        "description": "Server error"
+        "description": "Server error - content not guaranteed",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "json:api document",
+              "type": "object",
+              "required": ["errors"],
+              "properties": {
+                "errors": {
+                  "description": "json:api errors",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "NullResponse": {
         "description": "Successful operation",
@@ -1414,7 +1454,7 @@
             "schema": {
               "description": "json:api document",
               "type": "object",
-              "required": ["data"],
+              "required": ["data", "included"],
               "properties": {
                 "data": {
                   "$ref": "#/components/schemas/AuthResource"
@@ -1442,7 +1482,7 @@
             "schema": {
               "description": "json:api document",
               "type": "object",
-              "required": ["data"],
+              "required": ["data", "included"],
               "properties": {
                 "data": {
                   "$ref": "#/components/schemas/NullableAuthResource"

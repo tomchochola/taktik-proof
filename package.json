@@ -32,7 +32,8 @@
   "repository": "github:premierstacks/laravel-app-template",
   "devDependencies": {
     "@premierstacks/eslint-stack": "github:premierstacks/eslint-stack",
-    "@premierstacks/prettier-stack": "github:premierstacks/prettier-stack"
+    "@premierstacks/prettier-stack": "github:premierstacks/prettier-stack",
+    "ibm-openapi-validator": "^1.32"
   },
   "private": true,
   "type": "module"

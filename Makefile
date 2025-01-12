@@ -64,7 +64,7 @@ fix_prettier: ./node_modules/.bin/prettier ./prettier.config.js
 	./node_modules/.bin/prettier -w .
 
 .PHONY: lint
-lint: lint_eslint lint_prettier lint_php_cs_fixer
+lint: lint_eslint lint_prettier lint_php_cs_fixer lint_openapi
 
 .PHONY: lint_eslint
 lint_eslint: ./node_modules/.bin/eslint ./eslint.config.js
@@ -77,6 +77,10 @@ lint_php_cs_fixer: ./vendor/bin/php-cs-fixer ./.php-cs-fixer.php
 .PHONY: lint_prettier
 lint_prettier: ./node_modules/.bin/prettier ./prettier.config.js
 	./node_modules/.bin/prettier -c .
+
+.PHONY: lint_openapi
+lint_openapi: ./node_modules/.bin/lint-openapi ./public/docs/openapi.json
+	./node_modules/.bin/lint-openapi -e ./public/docs/openapi.json
 
 .PHONY: local
 local: ./vendor/autoload.php ./.env ./artisan
@@ -130,7 +134,7 @@ test_phpunit: ./.phpunit.coverage/html
 testing: local
 
 # Dependencies
- ./node_modules ./node_modules/.bin/eslint ./node_modules/.bin/prettier: ./package-lock.json
+ ./node_modules ./node_modules/.bin/eslint ./node_modules/.bin/prettier ./node_modules/.bin/lint-openapi: ./package-lock.json
 	npm install --install-links --include prod --include dev --include peer --include optional
 	touch ./package-lock.json
 	touch ./node_modules
