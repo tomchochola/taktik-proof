@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Laravel Template",
+    "title": "Laravel App Template",
     "description": "### 📘 API Documentation\n\nWelcome to the API documentation. This API provides a range of endpoints for various operations, including user authentication, verifications, session management, and more. It is designed to be flexible and scalable, allowing for future expansion and new endpoints.\n\n### 🌐 HTTP Client Options\n\nTo interact with this API, ensure your HTTP client meets the following requirements:\n\n- **CORS**: All requests must be made using Cross-Origin Resource Sharing (CORS) with credentials enabled.\n- **Cookies**: The API uses cookies for session management. Ensure cookies are enabled in your client, whether it's a browser or another type of HTTP client.\n\n### 📝 Input Formats\n\nFor modifying operations (POST, PUT, PATCH, DELETE), the API accepts input in the following formats:\n\n- `multipart/form-data`\n- `application/x-www-form-urlencoded`\n\n### 📦 Output Formats\n\nAll responses from the API adhere to the `application/vnd.api+json` format, following the [JSON:API](https://jsonapi.org) specification. This ensures consistent and structured responses, including:\n\n- **Data**: Standardized response structures for single resources and collections.\n- **Relationships**: Efficient management of related resources using 'included' relationships.\n- **Errors**: Clear and consistent error messages and status codes.\n\n### 🔧 JSON:API Compliance\n\nThis API fully complies with the JSON:API specification for all responses. The use of `application/vnd.api+json` ensures:\n\n- **Consistency**: Uniform response formats across all endpoints.\n- **Scalability**: Easy integration and expansion with new endpoints and resource types.\n- **Interoperability**: Smooth interaction with clients and tools that support JSON:API.\n\n### 🔍 Summary\n\nThis API is designed to be flexible, secure, and easy to use, with a focus on providing consistent and structured data through the JSON:API specification for all responses. Whether you're handling user authentication, managing sessions, or performing verifications, this API ensures a standardized approach to all operations.",
     "version": "1.0.0",
     "contact": {
@@ -759,12 +759,30 @@
         "maxLength": 1024,
         "example": "http://localhost:8000"
       },
-      "session_id": {
+      "nullableUrl": {
+        "description": "url",
+        "type": "string",
+        "format": "uri",
+        "pattern": ".+",
+        "minLength": 1,
+        "maxLength": 1024,
+        "example": "http://localhost:8000",
+        "nullable": true
+      },
+      "sessionId": {
         "description": "session id",
         "type": "string",
         "pattern": ".+",
         "minLength": 40,
         "maxLength": 255
+      },
+      "nullableSessionId": {
+        "description": "session id",
+        "type": "string",
+        "pattern": ".+",
+        "minLength": 40,
+        "maxLength": 255,
+        "nullable": true
       },
       "token": {
         "description": "token",
@@ -1112,6 +1130,39 @@
           }
         }
       },
+      "Error": {
+        "description": "json:api error",
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/string"
+          },
+          "code": {
+            "$ref": "#/components/schemas/string"
+          },
+          "title": {
+            "$ref": "#/components/schemas/string"
+          },
+          "detail": {
+            "$ref": "#/components/schemas/string"
+          },
+          "source": {
+            "description": "source",
+            "type": "object",
+            "properties": {
+              "pointer": {
+                "$ref": "#/components/schemas/string"
+              },
+              "parameter": {
+                "$ref": "#/components/schemas/string"
+              },
+              "header": {
+                "$ref": "#/components/schemas/string"
+              }
+            }
+          }
+        }
+      },
       "AuthResource": {
         "allOf": [
           {
@@ -1120,16 +1171,13 @@
           {
             "description": "auth json:api resource",
             "type": "object",
-            "required": ["attributes", "meta"],
+            "required": ["attributes"],
             "properties": {
               "attributes": {
                 "description": "attributes",
                 "type": "object",
-                "required": ["auth_identifier", "preferred_locale"],
+                "required": ["preferred_locale"],
                 "properties": {
-                  "auth_identifier": {
-                    "$ref": "#/components/schemas/identifier"
-                  },
                   "preferred_locale": {
                     "$ref": "#/components/schemas/nullableLocale"
                   },
@@ -1138,19 +1186,6 @@
                   },
                   "email_for_verification": {
                     "$ref": "#/components/schemas/nullableEmail"
-                  }
-                }
-              },
-              "meta": {
-                "description": "meta",
-                "type": "object",
-                "required": ["login_password_authorization", "login_multifactor_authorization"],
-                "properties": {
-                  "login_password_authorization": {
-                    "$ref": "#/components/schemas/boolean"
-                  },
-                  "login_multifactor_authorization": {
-                    "$ref": "#/components/schemas/boolean"
                   }
                 }
               },
@@ -1185,31 +1220,15 @@
           {
             "description": "authenticatable json:api resource",
             "type": "object",
-            "required": ["attributes", "meta"],
+            "required": ["attributes"],
             "properties": {
               "attributes": {
                 "description": "attributes",
                 "type": "object",
-                "required": ["auth_identifier", "preferred_locale"],
+                "required": ["preferred_locale"],
                 "properties": {
-                  "auth_identifier": {
-                    "$ref": "#/components/schemas/identifier"
-                  },
                   "preferred_locale": {
                     "$ref": "#/components/schemas/nullableLocale"
-                  }
-                }
-              },
-              "meta": {
-                "description": "meta",
-                "type": "object",
-                "required": ["login_password_authorization", "login_multifactor_authorization"],
-                "properties": {
-                  "login_password_authorization": {
-                    "$ref": "#/components/schemas/boolean"
-                  },
-                  "login_multifactor_authorization": {
-                    "$ref": "#/components/schemas/boolean"
                   }
                 }
               }
@@ -1336,10 +1355,22 @@
     },
     "responses": {
       "200": {
-        "description": "Successful operation"
+        "description": "OK"
+      },
+      "201": {
+        "description": "Created"
+      },
+      "202": {
+        "description": "Accepted"
+      },
+      "204": {
+        "description": "No content"
       },
       "4xx": {
         "description": "Client error"
+      },
+      "5xx": {
+        "description": "Server error"
       },
       "NullResponse": {
         "description": "Successful operation",
