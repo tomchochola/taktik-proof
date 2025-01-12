@@ -63,12 +63,12 @@
 
 ## Tooling
 
-| tool                                                    | description                |
-| ------------------------------------------------------- | -------------------------- |
-| https://github.com/premierstacks/php-cs-fixer-stack.git | Premierstacks PHP CS Fixer |
-| https://github.com/premierstacks/phpstan-stack.git      | Premierstacks PHPStan      |
-| https://github.com/premierstacks/eslint-stack.git       | Premierstacks ESLint       |
-| https://github.com/premierstacks/prettier-stack.git     | Premierstacks Prettier     |
+| tool                                                    | description              |
+| ------------------------------------------------------- | ------------------------ |
+| https://github.com/premierstacks/php-cs-fixer-stack.git | Premierstacks PHPCSFixer |
+| https://github.com/premierstacks/phpstan-stack.git      | Premierstacks PHPStan    |
+| https://github.com/premierstacks/eslint-stack.git       | Premierstacks ESLint     |
+| https://github.com/premierstacks/prettier-stack.git     | Premierstacks Prettier   |
 
 ## Locales
 
