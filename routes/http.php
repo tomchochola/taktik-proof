@@ -23,19 +23,19 @@ use Premierstacks\LaravelStack\Auth\Http\Controllers\SessionInvalidateController
 use Premierstacks\LaravelStack\Auth\Http\Controllers\SessionRegenerateController;
 use Premierstacks\LaravelStack\Auth\Http\Controllers\VerificationCompleteController;
 use Premierstacks\LaravelStack\Auth\Http\Controllers\VerificationShowController;
-use Premierstacks\LaravelStack\Container\Resolver;
+use Premierstacks\LaravelStack\Container\Resolve;
 use Premierstacks\LaravelStack\Http\Controllers\NotFoundController;
 use Premierstacks\LaravelStack\Http\Middleware\SetAuthDefaultsMiddleware;
 use Premierstacks\LaravelStack\Http\Middleware\SmartTransactionMiddleware;
 use Premierstacks\LaravelStack\Http\Middleware\ThrottleFailExceptMiddleware;
 use Premierstacks\LaravelStack\Http\Middleware\ThrottlePassMiddleware;
 
-Resolver::router()->view('api/swagger', 'psls::swagger', [
-    'url' => Resolver::urlGeneratorContract()->to('docs/openapi.json'),
+Resolve::router()->view('api/swagger', 'psls::swagger', [
+    'url' => Resolve::urlGeneratorContract()->to('docs/openapi.json'),
 ]);
 
-Resolver::routeRegistrar()->prefix('api')->middleware(['encrypted_cookies', 'api_form_json', SmartTransactionMiddleware::class])->group(static function (Router $router): void {
-    Resolver::routeRegistrar()->prefix('authenticatable')->middleware([SetAuthDefaultsMiddleware::class . ':users', ThrottleFailExceptMiddleware::class . ':fail,5,600', ThrottlePassMiddleware::class . ':pass,5,600'])->group(static function (Router $router): void {
+Resolve::routeRegistrar()->prefix('api')->middleware(['encrypted_cookies', 'api_form_json', SmartTransactionMiddleware::class])->group(static function (Router $router): void {
+    Resolve::routeRegistrar()->prefix('authenticatable')->middleware([SetAuthDefaultsMiddleware::class . ':users', ThrottleFailExceptMiddleware::class . ':fail,5,600', ThrottlePassMiddleware::class . ':pass,5,600'])->group(static function (Router $router): void {
         $router->post('retrieve', [RetrieveAuthenticatableController::class, 'handle']);
         $router->post('login_verification', [OccupiedEmailVerificationController::class, 'handle'])->setDefaults([
             'scope' => 'login',
@@ -74,12 +74,12 @@ Resolver::routeRegistrar()->prefix('api')->middleware(['encrypted_cookies', 'api
         $router->post('update_password', [PasswordUpdateController::class, 'handle']);
     });
 
-    Resolver::routeRegistrar()->prefix('verifications')->middleware([ThrottleFailExceptMiddleware::class . ':fail,5,600', ThrottlePassMiddleware::class . ':pass,5,600'])->group(static function (Router $router): void {
+    Resolve::routeRegistrar()->prefix('verifications')->middleware([ThrottleFailExceptMiddleware::class . ':fail,5,600', ThrottlePassMiddleware::class . ':pass,5,600'])->group(static function (Router $router): void {
         $router->post('complete', [VerificationCompleteController::class, 'handle']);
         $router->get('show', [VerificationShowController::class, 'handle']);
     });
 
-    Resolver::routeRegistrar()->prefix('sessions')->middleware([ThrottleFailExceptMiddleware::class . ':fail,5,600', ThrottlePassMiddleware::class . ':pass,5,600'])->group(static function (Router $router): void {
+    Resolve::routeRegistrar()->prefix('sessions')->middleware([ThrottleFailExceptMiddleware::class . ':fail,5,600', ThrottlePassMiddleware::class . ':pass,5,600'])->group(static function (Router $router): void {
         $router->post('invalidate', [SessionInvalidateController::class, 'handle']);
         $router->post('regenerate', [SessionRegenerateController::class, 'handle']);
     });
@@ -87,6 +87,6 @@ Resolver::routeRegistrar()->prefix('api')->middleware(['encrypted_cookies', 'api
     $router->any('{any}', [NotFoundController::class, 'handle'])->where('any', '.*');
 });
 
-Resolver::routeRegistrar()->group(static function (Router $router): void {
+Resolve::routeRegistrar()->group(static function (Router $router): void {
     $router->any('{any}', [NotFoundController::class, 'handle'])->where('any', '.*');
 });
