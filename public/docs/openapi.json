@@ -33,6 +33,14 @@
     {
       "name": "verifications",
       "description": "Verifications endpoints"
+    },
+    {
+      "name": "articles",
+      "description": "Articles endpoints"
+    },
+    {
+      "name": "users",
+      "description": "Users endpoints"
     }
   ],
   "paths": {
@@ -666,6 +674,242 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/SessionResponse"
+          }
+        }
+      }
+    },
+    "/api/articles/index": {
+      "get": {
+        "tags": ["articles"],
+        "summary": "Retrieve articles index",
+        "description": "Retrieve articles index.",
+        "operationId": "get_api_articles_index",
+        "parameters": [
+          {
+            "name": "filter[id][]",
+            "in": "query",
+            "description": "id",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          },
+          {
+            "name": "filter[user_id][]",
+            "in": "query",
+            "description": "user_id",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "schema": {
+              "$ref": "#/components/schemas/integer"
+            }
+          },
+          {
+            "name": "sort[]",
+            "in": "query",
+            "description": "sort",
+            "schema": {
+              "description": "sort",
+              "type": "array",
+              "items": {
+                "description": "sort",
+                "type": "string",
+                "enum": ["-id", "id", "-created_at", "created_at", "-updated_at", "updated_at"]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/VerificationResponse"
+          }
+        }
+      }
+    },
+    "/api/articles/show": {
+      "get": {
+        "tags": ["articles"],
+        "summary": "Retrieve articles details",
+        "description": "Retrieve articles details.",
+        "operationId": "get_api_articles_show",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/VerificationResponse"
+          }
+        }
+      }
+    },
+    "/api/articles/store": {
+      "post": {
+        "tags": ["articles"],
+        "summary": "Create new article",
+        "description": "Create new article.",
+        "operationId": "post_api_articles_store",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["title", "content"],
+                "properties": {
+                  "title": {
+                    "$ref": "#/components/schemas/varchar"
+                  },
+                  "content": {
+                    "$ref": "#/components/schemas/text"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ResourceIdentifierResponse"
+          }
+        }
+      }
+    },
+    "/api/articles/update": {
+      "post": {
+        "tags": ["articles"],
+        "summary": "Update article",
+        "description": "Update article.",
+        "operationId": "post_api_articles_update",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["id"],
+                "properties": {
+                  "id": {
+                    "$ref": "#/components/schemas/id"
+                  },
+                  "title": {
+                    "$ref": "#/components/schemas/varchar"
+                  },
+                  "content": {
+                    "$ref": "#/components/schemas/text"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          }
+        }
+      }
+    },
+    "/api/articles/destroy": {
+      "post": {
+        "tags": ["articles"],
+        "summary": "Destroy article",
+        "description": "Destroy article.",
+        "operationId": "post_api_articles_destroy",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["id"],
+                "properties": {
+                  "id": {
+                    "$ref": "#/components/schemas/id"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          }
+        }
+      }
+    },
+    "/api/users/like": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Like user",
+        "description": "Like user.",
+        "operationId": "post_api_users_like",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["target_user_id"],
+                "properties": {
+                  "target_user_id": {
+                    "$ref": "#/components/schemas/id"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
+          }
+        }
+      }
+    },
+    "/api/users/dislike": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Dislike user",
+        "description": "Dislike user.",
+        "operationId": "post_api_users_dislike",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "description": "request data",
+                "type": "object",
+                "required": ["target_user_id"],
+                "properties": {
+                  "target_user_id": {
+                    "$ref": "#/components/schemas/id"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204"
           }
         }
       }
@@ -1355,6 +1599,42 @@
             }
           }
         ]
+      },
+      "ArticleResource": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Resource"
+          },
+          {
+            "description": "article json:api resource",
+            "type": "object",
+            "required": ["attributes"],
+            "properties": {
+              "attributes": {
+                "description": "attributes",
+                "type": "object",
+                "required": ["user_id", "title", "content", "created_at", "updated_at"],
+                "properties": {
+                  "user_id": {
+                    "$ref": "#/components/schemas/id"
+                  },
+                  "title": {
+                    "$ref": "#/components/schemas/string"
+                  },
+                  "content": {
+                    "$ref": "#/components/schemas/string"
+                  },
+                  "created_at": {
+                    "$ref": "#/components/schemas/datetime"
+                  },
+                  "updated_at": {
+                    "$ref": "#/components/schemas/datetime"
+                  }
+                }
+              }
+            }
+          }
+        ]
       }
     },
     "responses": {
@@ -1548,6 +1828,61 @@
               "properties": {
                 "data": {
                   "$ref": "#/components/schemas/SessionResource"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ResourceIdentifierResponse": {
+        "description": "Successful operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "json:api document",
+              "type": "object",
+              "required": ["data"],
+              "properties": {
+                "data": {
+                  "$ref": "#/components/schemas/Resource"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ArticleResponse": {
+        "description": "Successful operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "json:api document",
+              "type": "object",
+              "required": ["data"],
+              "properties": {
+                "data": {
+                  "$ref": "#/components/schemas/ArticleResource"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ArticlesResponse": {
+        "description": "Successful operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "json:api document",
+              "type": "object",
+              "required": ["data"],
+              "properties": {
+                "data": {
+                  "description": "collection of resources",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArticleResource"
+                  }
                 }
               }
             }

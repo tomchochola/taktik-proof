@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Middleware\ThrottleMiddleware;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Debug\ExceptionHandler as ExceptionHandlerContract;
 use Illuminate\Foundation\Application;
@@ -22,6 +23,8 @@ return Application::configure(basePath: \dirname(__DIR__))
     })
     ->withMiddleware(static function (Middleware $middleware): void {
         MiddlewareConfiguration::configure($middleware);
+
+        $middleware->append(ThrottleMiddleware::class);
     })
     ->withExceptions()
     ->withSingletons([

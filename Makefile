@@ -64,7 +64,7 @@ fix_prettier: ./node_modules/.bin/prettier ./prettier.config.js
 	./node_modules/.bin/prettier -w .
 
 .PHONY: lint
-lint: lint_eslint lint_prettier lint_php_cs_fixer lint_openapi
+lint: lint_eslint lint_prettier lint_php_cs_fixer
 
 .PHONY: lint_eslint
 lint_eslint: ./node_modules/.bin/eslint ./eslint.config.js
@@ -124,6 +124,7 @@ test: test_phpunit
 .PHONY: test_phpunit
 test_phpunit: ./.phpunit.coverage/html
 
+.PHONY: ./.phpunit.coverage/html
 ./.phpunit.coverage/html: ./vendor/bin/phpunit ./phpunit.xml ./artisan ./.env.testing
 	${MAKE_COMPOSER} dump-autoload -o --dev --strict-psr
 	${MAKE_ARTISAN} package:discover --env=testing

@@ -2,6 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Api\Article\ArticleDestroyController;
+use App\Http\Controllers\Api\Article\ArticleIndexController;
+use App\Http\Controllers\Api\Article\ArticleShowController;
+use App\Http\Controllers\Api\Article\ArticleStoreController;
+use App\Http\Controllers\Api\Article\ArticleUpdateController;
+use App\Http\Controllers\Api\Like\UserLikeAttachController;
+use App\Http\Controllers\Api\Like\UserLikeDetachController;
+use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Routing\Router;
 use Premierstacks\LaravelStack\Auth\Http\Controllers\AuthenticatableDestroyController;
 use Premierstacks\LaravelStack\Auth\Http\Controllers\AuthenticatableShowController;
@@ -25,7 +33,6 @@ use Premierstacks\LaravelStack\Auth\Http\Controllers\VerificationCompleteControl
 use Premierstacks\LaravelStack\Auth\Http\Controllers\VerificationShowController;
 use Premierstacks\LaravelStack\Container\Resolve;
 use Premierstacks\LaravelStack\Http\Controllers\NotFoundController;
-use Premierstacks\LaravelStack\Http\Middleware\SetAuthDefaultsMiddleware;
 use Premierstacks\LaravelStack\Http\Middleware\SmartTransactionMiddleware;
 use Premierstacks\LaravelStack\Http\Middleware\ThrottleFailExceptMiddleware;
 use Premierstacks\LaravelStack\Http\Middleware\ThrottlePassMiddleware;
@@ -35,7 +42,20 @@ Resolve::router()->view('api/swagger', 'psls::swagger', [
 ]);
 
 Resolve::routeRegistrar()->prefix('api')->middleware(['encrypted_cookies', 'api_form_json', SmartTransactionMiddleware::class])->group(static function (Router $router): void {
-    Resolve::routeRegistrar()->prefix('authenticatable')->middleware([SetAuthDefaultsMiddleware::class . ':users', ThrottleFailExceptMiddleware::class . ':fail,5,600', ThrottlePassMiddleware::class . ':pass,5,600'])->group(static function (Router $router): void {
+    Resolve::routeRegistrar()->prefix('articles')->group(static function (Router $router): void {
+        $router->get('index', [ArticleIndexController::class, 'handle']);
+        Resolve::routeRegistrar()->middleware(SetCacheHeaders::using(['public' => true, 'etag' => true, 'max_age' => 60]))->get('show', [ArticleShowController::class, 'handle']);
+        $router->post('store', [ArticleStoreController::class, 'handle']);
+        $router->post('destroy', [ArticleDestroyController::class, 'handle']);
+        $router->post('update', [ArticleUpdateController::class, 'handle']);
+    });
+
+    Resolve::routeRegistrar()->prefix('users')->group(static function (Router $router): void {
+        $router->post('like', [UserLikeAttachController::class, 'handle']);
+        $router->post('dislike', [UserLikeDetachController::class, 'handle']);
+    });
+
+    Resolve::routeRegistrar()->prefix('authenticatable')->middleware([ThrottleFailExceptMiddleware::class . ':fail,5,600', ThrottlePassMiddleware::class . ':pass,5,600'])->group(static function (Router $router): void {
         $router->post('retrieve', [RetrieveAuthenticatableController::class, 'handle']);
         $router->post('login_verification', [OccupiedEmailVerificationController::class, 'handle'])->setDefaults([
             'scope' => 'login',
