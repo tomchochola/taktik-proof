@@ -726,7 +726,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/VerificationResponse"
+            "$ref": "#/components/responses/ArticlesResponse"
           }
         }
       }
@@ -750,7 +750,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/VerificationResponse"
+            "$ref": "#/components/responses/ArticleResponse"
           }
         }
       }
